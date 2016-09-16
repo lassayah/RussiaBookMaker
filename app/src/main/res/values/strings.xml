@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">RussiaBookMaker</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Login</string>
+    <string name="login_title">Connexion</string>
+    <string name="currentRankTitle">Votre classement</string>
+    <string name="currentRankValue">1er</string>
+    <string name="currentRankButton">Consulter le classement</string>
+    <string name="welcome">Bienvenue sur RussiaBookMaker</string>
+    <string name="betsMenu">Pariez</string>
+    <string name="matchOfDay">Match du jour</string>
+    <string name="topMenu">Faites votre Top 4</string>
+    <string name="rankMenu">Classement</string>
+    <string name="line">-</string>
+    <string name="betButton">Matchs</string>
+    <string name="matchOfDayTeam1">Equipe 1</string>
+    <string name="matchOfDayTeam2">Equipe 2</string>
+    <string name="matchOfDayButton">Pariez</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="action_sign_in">Valider</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="login">username</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_global_ranking">GlobalRanking</string>
+    <string name="title_activity_bet">BetActivity</string>
+    <string name="title_activity_bet_details">BetDetailsActivity</string>
+</resources>
