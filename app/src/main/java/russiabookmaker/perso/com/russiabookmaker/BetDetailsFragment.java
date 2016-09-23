@@ -37,12 +37,14 @@ public class BetDetailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String POSITION = "position";
+    private static final String FILTER = "filter";
 
     private RecyclerView matchList;
 
     // TODO: Rename and change types of parameters
     private int position = 0;
     private String pseudo;
+    private String filter = "global";
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,10 +60,11 @@ public class BetDetailsFragment extends Fragment {
      * @return A new instance of fragment BetDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BetDetailsFragment newInstance(int pos) {
+    public static BetDetailsFragment newInstance(int pos, String filter) {
         BetDetailsFragment fragment = new BetDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(POSITION, pos);
+        args.putString(FILTER, filter);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,6 +74,7 @@ public class BetDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             position = getArguments().getInt(POSITION);
+            filter = getArguments().getString(FILTER);
         }
     }
 
@@ -105,7 +109,7 @@ public class BetDetailsFragment extends Fragment {
 
     private void callService(int position){
         MatchService matchService = MatchService.retrofit.create(MatchService.class);
-        final Call<List<Match>> call = matchService.callMatch(String.valueOf(position), pseudo);
+        final Call<List<Match>> call = matchService.callMatch(String.valueOf(position), pseudo, filter);
         call.enqueue(new Callback<List<Match>>(){
             @Override
             public void onResponse(Call<List<Match>> call, Response<List<Match>> response) {

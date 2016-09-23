@@ -18,7 +18,8 @@ public interface MatchService {
     @POST("bet.php")
     Call<List<Match>> callMatch(
             @Field("numberGroupMatch") String numberGroupMatch,
-            @Field("username") String username
+            @Field("username") String username,
+            @Field("filter") String filter
     );
 
     public static final Retrofit retrofit = new Retrofit.Builder()

@@ -36,7 +36,7 @@ public class BetDetailsActivity extends AppCompatActivity implements BetDetailsF
         position = intent.getIntExtra("position", 0);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        BetDetailsFragment betFragment = BetDetailsFragment.newInstance(position);
+        BetDetailsFragment betFragment = BetDetailsFragment.newInstance(position, "global");
         fragmentTransaction.add(R.id.bet_detail_layout, betFragment);
         fragmentTransaction.commit();
     }
