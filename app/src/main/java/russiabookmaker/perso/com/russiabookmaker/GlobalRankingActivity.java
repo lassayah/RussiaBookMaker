@@ -1,9 +1,12 @@
 package russiabookmaker.perso.com.russiabookmaker;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +24,7 @@ import russiabookmaker.perso.com.russiabookmaker.adapter.RankingAdapter;
 import russiabookmaker.perso.com.russiabookmaker.model.Ranking;
 import russiabookmaker.perso.com.russiabookmaker.rest.RankingService;
 
-public class GlobalRankingActivity extends AppCompatActivity {
+public class GlobalRankingActivity extends AppCompatActivity implements CurrentRankFragment.OnCurrentRankFragmentInteractionListener {
 
     private RecyclerView rankingList;
     @Override
@@ -42,14 +45,6 @@ public class GlobalRankingActivity extends AppCompatActivity {
         rankingList.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        RecyclerView.Adapter myDataset;
-        /*ArrayList<Ranking> rankList = new ArrayList<Ranking>();
-        Ranking ranking = new Ranking();
-        ranking.setUser("test");
-        ranking.setRank("1er");
-        rankList.add(ranking);
-        RankingAdapter rankingAdapter = new RankingAdapter(rankList);
-        rankingList.setAdapter(rankingAdapter);*/
         RankingService rankingService = RankingService.retrofit.create(RankingService.class);
         final Call<List<Ranking>> call = rankingService.callRanking();
         call.enqueue(new Callback<List<Ranking>>() {
@@ -71,6 +66,11 @@ public class GlobalRankingActivity extends AppCompatActivity {
                 Log.d("callko", t.getMessage());
             }
         });
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        CurrentRankFragment crFragment = new CurrentRankFragment();
+        fragmentTransaction.add(R.id.global_ranking_container, crFragment);
+        fragmentTransaction.commit();
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,4 +81,8 @@ public class GlobalRankingActivity extends AppCompatActivity {
         });*/
     }
 
+    @Override
+    public void onCurrentRankFragmentInteraction(Uri uri) {
+
+    }
 }

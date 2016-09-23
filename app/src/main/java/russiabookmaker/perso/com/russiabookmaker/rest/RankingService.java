@@ -18,7 +18,7 @@ public interface RankingService {
     Call<List<Ranking>> callRanking();
 
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://assayah.com/Brazil/webservices/")
+            .baseUrl("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 }

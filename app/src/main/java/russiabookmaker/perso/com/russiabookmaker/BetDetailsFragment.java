@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import russiabookmaker.perso.com.russiabookmaker.adapter.MatchAdapter;
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
+import russiabookmaker.perso.com.russiabookmaker.rest.BetService;
 import russiabookmaker.perso.com.russiabookmaker.rest.MatchService;
 
 
@@ -86,17 +88,16 @@ public class BetDetailsFragment extends Fragment {
         matchList.setLayoutManager(mLayoutManager);
         SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
         pseudo = sharedPref.getString(getString(R.string.login), "user");
+
+
+
+
         callService(position);
 
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     public void updateContent(int position) {
         callService(position);
@@ -116,9 +117,14 @@ public class BetDetailsFragment extends Fragment {
                     match.setTeam2(response.body().get(i).getTeam2());
                     match.setResultTeam1(response.body().get(i).getResultTeam1());
                     match.setResultTeam2(response.body().get(i).getResultTeam2());
+                    match.setId(response.body().get(i).getId());
+                    match.setMatchTime(response.body().get(i).getMatchTime());
+                    match.setDateServeur(response.body().get(i).getDateServeur());
+                    match.setFlag1(response.body().get(i).getFlag1());
+                    match.setFlag2(response.body().get(i).getFlag2());
                     mList.add(match);
                 }
-                MatchAdapter matchAdapter = new MatchAdapter(mList);
+                MatchAdapter matchAdapter = new MatchAdapter(mList, mListener, pseudo, getContext());
                 matchList.setAdapter(matchAdapter);
             }
             @Override

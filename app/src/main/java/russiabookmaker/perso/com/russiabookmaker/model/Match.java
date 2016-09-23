@@ -15,7 +15,13 @@ public class Match {
     private int tabTeam2;
     private boolean prolongations;
     private Date matchTime;
-    private String resultBet;
+    private int resultBet;
+    private int id;
+    private String group;
+    private Date dateServeur;
+    private String betOk;
+    private String flag1;
+    private String flag2;
 
 
     public String getTeam1() {
@@ -82,11 +88,59 @@ public class Match {
         this.matchTime = matchTime;
     }
 
-    public String getResultBet() {
+    public int getResultBet() {
         return resultBet;
     }
 
-    public void setResultBet(String resultBet) {
+    public void setResultBet(int resultBet) {
         this.resultBet = resultBet;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getDateServeur() {
+        return dateServeur;
+    }
+
+    public void setDateServeur(Date dateServeur) {
+        this.dateServeur = dateServeur;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getBetOk() {
+        return betOk;
+    }
+
+    public void setBetOk(String betOk) {
+        this.betOk = betOk;
+    }
+
+    public String getFlag2() {
+        return flag2;
+    }
+
+    public void setFlag2(String flag2) {
+        this.flag2 = flag2;
+    }
+
+    public String getFlag1() {
+        return flag1;
+    }
+
+    public void setFlag1(String flag1) {
+        this.flag1 = flag1;
     }
 }

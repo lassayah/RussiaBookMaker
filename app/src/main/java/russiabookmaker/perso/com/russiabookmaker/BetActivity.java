@@ -1,13 +1,24 @@
 package russiabookmaker.perso.com.russiabookmaker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+
+import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import russiabookmaker.perso.com.russiabookmaker.model.Match;
+import russiabookmaker.perso.com.russiabookmaker.rest.BetService;
 
 public class BetActivity extends AppCompatActivity implements CategoryFragment.OnCategoryFragmentInteractionListener, BetDetailsFragment.OnFragmentInteractionListener {
 

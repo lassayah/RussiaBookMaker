@@ -3,10 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/team1Flag"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/team1Label"/>
+        android:id="@+id/team1Label"
+        android:layout_toRightOf="@+id/team1Flag"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,4 +38,24 @@
         android:id="@+id/team2Label"
         android:layout_toRightOf="@+id/resultTeam2"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/team2Flag"
+        android:layout_toRightOf="@+id/team2Label"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/betAction"
+        android:text="@string/matchOfDayButton"
+        android:layout_below="@+id/team1Label"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/blockBet"
+        android:layout_below="@+id/team1Label"
+        android:visibility="gone"/>
+
 </RelativeLayout>
+

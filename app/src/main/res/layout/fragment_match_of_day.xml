@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="russiabookmaker.perso.com.russiabookmaker.MatchOfDayFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,5 +40,16 @@
         android:id="@+id/matchOfDayButton"
         android:text="@string/matchOfDayButton"
         />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noMatch"/>
+
     </LinearLayout>
 </FrameLayout>

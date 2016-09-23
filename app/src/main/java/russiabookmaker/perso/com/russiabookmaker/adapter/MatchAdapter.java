@@ -1,15 +1,29 @@
 package russiabookmaker.perso.com.russiabookmaker.adapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import russiabookmaker.perso.com.russiabookmaker.BetDetailsFragment;
 import russiabookmaker.perso.com.russiabookmaker.R;
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
+import russiabookmaker.perso.com.russiabookmaker.rest.BetService;
 
 /**
  * Created by versusmind on 14/09/16.
@@ -17,6 +31,9 @@ import russiabookmaker.perso.com.russiabookmaker.model.Match;
 public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> {
 
     private ArrayList<Match> mDataset;
+    private String mUser;
+    private Context mContext;
+    private BetDetailsFragment.OnFragmentInteractionListener mListener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -27,18 +44,27 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         public TextView team2TextView;
         public TextView resultTeam1TextView;
         public TextView resultTeam2TextView;
+        public ImageView team1ImageView;
+        public ImageView team2ImageView;
+        public Button betAction;
         public ViewHolder(View v) {
             super(v);
             team1TextView = (TextView) v.findViewById(R.id.team1Label);
             team2TextView = (TextView) v.findViewById(R.id.team2Label);
             resultTeam1TextView = (TextView) v.findViewById(R.id.resultTeam1);
             resultTeam2TextView = (TextView) v.findViewById(R.id.resultTeam2);
+            betAction = (Button) v.findViewById(R.id.betAction);
+            team1ImageView = (ImageView) v.findViewById(R.id.team1Flag);
+            team2ImageView = (ImageView) v.findViewById(R.id.team2Flag);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MatchAdapter(ArrayList<Match> myDataset) {
+    public MatchAdapter(ArrayList<Match> myDataset, BetDetailsFragment.OnFragmentInteractionListener myListener, String user, Context context) {
         mDataset = myDataset;
+        mListener = myListener;
+        mUser = user;
+        mContext = context;
     }
 
 
@@ -53,11 +79,46 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(MatchAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MatchAdapter.ViewHolder holder, final int position) {
         holder.team1TextView.setText(mDataset.get(position).getTeam1());
         holder.team2TextView.setText(mDataset.get(position).getTeam2());
         holder.resultTeam1TextView.setText(String.valueOf(mDataset.get(position).getResultTeam1()));
         holder.resultTeam2TextView.setText(String.valueOf(mDataset.get(position).getResultTeam2()));
+        Picasso.with(mContext).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + mDataset.get(position).getFlag1()).into(holder.team1ImageView);
+        Picasso.with(mContext).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + mDataset.get(position).getFlag2()).into(holder.team2ImageView);
+        final int id = mDataset.get(position).getId();
+        final Date matchTime = mDataset.get(position).getMatchTime();
+        final int resultBet = mDataset.get(position).getResultBet();
+        holder.betAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                BetService betService = BetService.retrofit.create(BetService.class);
+                System.out.println(id);
+                System.out.println(mUser);
+                System.out.println(matchTime);
+                System.out.println(resultBet);
+                final Call<Match> call = betService.callMatch(id, mUser, matchTime, 2);
+                call.enqueue(new Callback<Match>(){
+                    @Override
+                    public void onResponse(Call<Match> call, Response<Match> response) {
+                        System.out.println("response : " + response.body().getBetOk());
+                        String message = "";
+                        if (response.body().getBetOk().equals("late"))
+                            message = "Trop tard...";
+                        else if (response.body().getBetOk().equals("true"))
+                            message = "Pari envoyé";
+                        else
+                            message = "Erreur d'envoi";
+                        Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onFailure(Call<Match> call, Throwable t) {
+                        Log.d("callko", t.getMessage());
+                        Log.d("callko", t.getCause().toString());
+                    }
+                });
+            }
+        });
     }
 
     @Override
