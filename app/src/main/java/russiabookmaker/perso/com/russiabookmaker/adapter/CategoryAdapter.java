@@ -12,13 +12,14 @@ import java.util.ArrayList;
 import russiabookmaker.perso.com.russiabookmaker.BetDetailsActivity;
 import russiabookmaker.perso.com.russiabookmaker.CategoryFragment;
 import russiabookmaker.perso.com.russiabookmaker.R;
+import russiabookmaker.perso.com.russiabookmaker.model.Match;
 
 /**
  * Created by versusmind on 13/09/16.
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    private ArrayList<String> mDataset;
+    private ArrayList<Match> mDataset;
     private CategoryFragment.OnCategoryFragmentInteractionListener mListener;
 
     // Provide a reference to the views for each data item
@@ -26,15 +27,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView categoryTextView;
+        //public TextView categoryTextView;
+        public TextView team1TextView;
+        public TextView team2TextView;
+        public TextView resultTeam1TextView;
+        public TextView resultTeam2TextView;
         public ViewHolder(View v) {
             super(v);
-           categoryTextView = (TextView) v.findViewById(R.id.categoryTextView);
+           //categoryTextView = (TextView) v.findViewById(R.id.categoryTextView);
+            team1TextView = (TextView) v.findViewById(R.id.team1Label);
+            team2TextView = (TextView) v.findViewById(R.id.team2Label);
+            resultTeam1TextView = (TextView) v.findViewById(R.id.resultTeam1);
+            resultTeam2TextView = (TextView) v.findViewById(R.id.resultTeam2);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CategoryAdapter(ArrayList<String> myDataset, CategoryFragment.OnCategoryFragmentInteractionListener myListener) {
+    public CategoryAdapter(ArrayList<Match> myDataset, CategoryFragment.OnCategoryFragmentInteractionListener myListener) {
         mDataset = myDataset;
         mListener = myListener;
     }
@@ -54,17 +63,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-
-        holder.categoryTextView.setText(mDataset.get(position));
+        final int id = position;
+        //holder.categoryTextView.setText(mDataset.get(position));
+        holder.team1TextView.setText(mDataset.get(position).getTeam1());
+        holder.team2TextView.setText(mDataset.get(position).getTeam2());
+        holder.resultTeam1TextView.setText(String.valueOf(mDataset.get(position).getResultTeam1()));
+        holder.resultTeam2TextView.setText(String.valueOf(mDataset.get(position).getResultTeam2()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null)
-                    mListener.onItemSelected(position);
+                    mListener.onItemSelected(id);
             }
         });
     }

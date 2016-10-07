@@ -33,7 +33,7 @@ public class BetDetailsActivity extends AppCompatActivity implements BetDetailsF
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", 0);
+        position = intent.getIntExtra("matchId", 0);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         BetDetailsFragment betFragment = BetDetailsFragment.newInstance(position, "global");

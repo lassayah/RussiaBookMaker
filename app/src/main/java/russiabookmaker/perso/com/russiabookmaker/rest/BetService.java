@@ -20,7 +20,7 @@ public interface BetService {
     Call<Match> callMatch(
             @Field("id") int id,
             @Field("username") String username,
-            @Field("matchTime") Date matchTime,
+            @Field("matchTime") String matchTime,
             @Field("resultBet") int resultBet
     );
 

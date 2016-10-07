@@ -11,15 +11,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import russiabookmaker.perso.com.russiabookmaker.adapter.MatchAdapter;
+import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
 import russiabookmaker.perso.com.russiabookmaker.rest.BetService;
 import russiabookmaker.perso.com.russiabookmaker.rest.MatchService;
@@ -40,11 +53,22 @@ public class BetDetailsFragment extends Fragment {
     private static final String FILTER = "filter";
 
     private RecyclerView matchList;
+    private DBHelper mydb;
 
     // TODO: Rename and change types of parameters
     private int position = 0;
     private String pseudo;
     private String filter = "global";
+    private TextView team1TextView;
+    private TextView team2TextView;
+    private ImageView team1ImageView;
+    private ImageView team2ImageView;
+    private Button team1ImageButton;
+    private Button team2ImageButton;
+    private Button nulImageButton;
+    private Match match;
+    private LinearLayout matchLayout;
+    private LinearLayout noMatchLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -83,7 +107,7 @@ public class BetDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bet_details, container, false);
-        matchList = (RecyclerView) v.findViewById(R.id.matchList);
+        /*matchList = (RecyclerView) v.findViewById(R.id.matchList);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -96,9 +120,70 @@ public class BetDetailsFragment extends Fragment {
 
 
 
+        callService(position);*/
+        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
+        pseudo = sharedPref.getString(getString(R.string.login), "user");
+        team1ImageButton = (Button) v.findViewById(R.id.team1DetailImageButton);
+        team2ImageButton = (Button) v.findViewById(R.id.team2DetailImageButton);
+        nulImageButton = (Button) v.findViewById(R.id.nulImageButton);
+        team1ImageView = (ImageView) v.findViewById(R.id.team1DetailImageView);
+        team2ImageView = (ImageView) v.findViewById(R.id.team2DetailImageView);
+        matchLayout = (LinearLayout) v.findViewById(R.id.matchTodayLayout);
+        noMatchLayout = (LinearLayout) v.findViewById(R.id.noMatchLayout);
         callService(position);
 
+
+        team1ImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeBet(match.getTeam1Id());
+            }
+        });
+
+        team2ImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeBet(match.getTeam2Id());
+            }
+        });
+
+        nulImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeBet(33);
+            }
+        });
+
         return v;
+    }
+
+    private void makeBet(int bet) {
+        BetService betService = BetService.retrofit.create(BetService.class);
+        System.out.println(match.getMatchTime());
+        System.out.println(match.getId());
+        System.out.println(bet);
+        System.out.println(pseudo);
+        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        final Call<Match> call = betService.callMatch(match.getId(), pseudo, parseFormat.format(match.getMatchTime()), bet);
+        call.enqueue(new Callback<Match>(){
+            @Override
+            public void onResponse(Call<Match> call, Response<Match> response) {
+                System.out.println("response : " + response.body().getBetOk());
+                String message = "";
+                if (response.body().getBetOk().equals("late"))
+                    message = "Trop tard...";
+                else if (response.body().getBetOk().equals("true"))
+                    message = "Pari envoyé";
+                else
+                    message = "Erreur d'envoi";
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onFailure(Call<Match> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+                Log.d("callko", t.getCause().toString());
+            }
+        });
     }
 
 
@@ -107,9 +192,9 @@ public class BetDetailsFragment extends Fragment {
         callService(position);
     }
 
-    private void callService(int position){
-        MatchService matchService = MatchService.retrofit.create(MatchService.class);
-        final Call<List<Match>> call = matchService.callMatch(String.valueOf(position), pseudo, filter);
+    private void callService(final int position){
+        /*MatchService matchService = MatchService.retrofit.create(MatchService.class);
+        final Call<List<Match>> call = matchService.callMatch(/*String.valueOf(position),*/ /*pseudo, filter);
         call.enqueue(new Callback<List<Match>>(){
             @Override
             public void onResponse(Call<List<Match>> call, Response<List<Match>> response) {
@@ -126,6 +211,7 @@ public class BetDetailsFragment extends Fragment {
                     match.setDateServeur(response.body().get(i).getDateServeur());
                     match.setFlag1(response.body().get(i).getFlag1());
                     match.setFlag2(response.body().get(i).getFlag2());
+                    match.setGroup(response.body().get(i).getGroup());
                     mList.add(match);
                 }
                 MatchAdapter matchAdapter = new MatchAdapter(mList, mListener, pseudo, getContext());
@@ -136,7 +222,23 @@ public class BetDetailsFragment extends Fragment {
                 Log.d("callko", t.getMessage());
                 Log.d("callko", t.getCause().toString());
             }
-        });
+        });*/
+        mydb = new DBHelper(getContext());
+        match = mydb.getMatch(position);
+        /*if (filter.equals("day")) {
+            matchLayout.setVisibility(View.GONE);
+            noMatchLayout.setVisibility(View.VISIBLE);
+        }*/
+
+        //System.out.println("get team 1 " + match.getTeam1());
+        Picasso.with(getContext()).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + match.getFlag1()).into(team1ImageView);
+        Picasso.with(getContext()).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + match.getFlag2()).into(team2ImageView);
+        team1ImageButton.setText(match.getTeam1());
+        team2ImageButton.setText(match.getTeam2());
+        nulImageButton.setText("Nul");
+        //MatchAdapter matchAdapter = new MatchAdapter(position, getContext());
+        //matchList.setAdapter(matchAdapter);
+
     }
 
     @Override

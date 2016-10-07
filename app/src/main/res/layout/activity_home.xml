@@ -20,10 +20,11 @@
         android:text="@string/welcome"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/matchOfDay_container"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
     </LinearLayout>
     <Button
@@ -33,7 +34,7 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/betButton"/>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/currentRank_container"
         android:orientation="vertical">

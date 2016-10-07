@@ -2,15 +2,24 @@ package russiabookmaker.perso.com.russiabookmaker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.zip.Inflater;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import russiabookmaker.perso.com.russiabookmaker.model.Ranking;
+import russiabookmaker.perso.com.russiabookmaker.rest.CurrentRankService;
 
 
 /**
@@ -69,7 +78,23 @@ public class CurrentRankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View fragmentView = inflater.inflate(R.layout.fragment_current_rank, container, false);
+       final View fragmentView = inflater.inflate(R.layout.fragment_current_rank, container, false);
+        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
+        String pseudo = sharedPref.getString(getString(R.string.login), "user");
+        CurrentRankService currentRankService = CurrentRankService.retrofit.create(CurrentRankService.class);
+        final Call<Ranking> call = currentRankService.callCurrentRank(pseudo);
+        call.enqueue(new Callback<Ranking>(){
+            @Override
+            public void onResponse(Call<Ranking> call, Response<Ranking> response) {
+                TextView userRank = (TextView) fragmentView.findViewById(R.id.userRank);
+                userRank.setText(response.body().getRank());
+            }
+            @Override
+            public void onFailure(Call<Ranking> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+                Log.d("callko", t.getCause().toString());
+            }
+        });
 
         return fragmentView;
     }

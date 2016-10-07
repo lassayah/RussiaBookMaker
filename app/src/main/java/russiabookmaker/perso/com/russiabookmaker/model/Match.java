@@ -17,6 +17,8 @@ public class Match {
     private Date matchTime;
     private int resultBet;
     private int id;
+    private int team1Id;
+    private int team2Id;
     private String group;
     private Date dateServeur;
     private String betOk;
@@ -142,5 +144,21 @@ public class Match {
 
     public void setFlag1(String flag1) {
         this.flag1 = flag1;
+    }
+
+    public int getTeam1Id() {
+        return team1Id;
+    }
+
+    public void setTeam1Id(int team1Id) {
+        this.team1Id = team1Id;
+    }
+
+    public int getTeam2Id() {
+        return team2Id;
+    }
+
+    public void setTeam2Id(int team2Id) {
+        this.team2Id = team2Id;
     }
 }

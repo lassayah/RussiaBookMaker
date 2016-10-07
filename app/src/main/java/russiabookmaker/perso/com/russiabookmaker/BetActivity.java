@@ -40,7 +40,8 @@ public class BetActivity extends AppCompatActivity implements CategoryFragment.O
     }
 
     @Override
-    public void onItemSelected(int position) {
+    public void onItemSelected(int id) {
+        System.out.println("id = " + id);
         System.out.println("go to next screen");
         BetDetailsFragment displayFrag = (BetDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.betDetailsFragment);
         if (displayFrag == null) {
@@ -48,12 +49,15 @@ public class BetActivity extends AppCompatActivity implements CategoryFragment.O
             // so start DisplayActivity (Activity B)
             // and pass it the info about the selected item
             Intent intent = new Intent(this, BetDetailsActivity.class);
-            intent.putExtra("position", position);
+            //intent.putExtra("position", position);
+            intent.putExtra("matchId", id);
+            intent.putExtra("filter", "global");
             startActivity(intent);
         } else {
             // DisplayFragment (Fragment B) is in the layout (tablet layout),
             // so tell the fragment to update
-            displayFrag.updateContent(position);
+            //displayFrag.updateContent(position);
+            displayFrag.updateContent(id);
         }
     }
 }
