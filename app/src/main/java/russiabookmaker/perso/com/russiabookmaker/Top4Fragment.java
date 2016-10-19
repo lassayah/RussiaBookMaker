@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MatchOfDayFragment.OnMatchOfDayFragmentInteractionListener} interface
+ * {@link Top4Fragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MatchOfDayFragment#newInstance} factory method to
+ * Use the {@link Top4Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MatchOfDayFragment extends Fragment {
+public class Top4Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -27,9 +27,9 @@ public class MatchOfDayFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnMatchOfDayFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
 
-    public MatchOfDayFragment() {
+    public Top4Fragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class MatchOfDayFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MatchOfDayFragment.
+     * @return A new instance of fragment Top4Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MatchOfDayFragment newInstance(String param1, String param2) {
-        MatchOfDayFragment fragment = new MatchOfDayFragment();
+    public static Top4Fragment newInstance(String param1, String param2) {
+        Top4Fragment fragment = new Top4Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,23 +63,22 @@ public class MatchOfDayFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_match_of_day, container, false);
         // Inflate the layout for this fragment
-        return v;
+        return inflater.inflate(R.layout.fragment_top4, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onMatchOfDayFragmentInteraction(uri);
+            mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnMatchOfDayFragmentInteractionListener) {
-            mListener = (OnMatchOfDayFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -97,13 +96,13 @@ public class MatchOfDayFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnMatchOfDayFragmentInteractionListener {
+    public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onMatchOfDayFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 }

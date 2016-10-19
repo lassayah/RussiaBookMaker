@@ -15,7 +15,7 @@ public class Match {
     private int tabTeam2;
     private boolean prolongations;
     private Date matchTime;
-    private int resultBet;
+    private String resultBet;
     private int id;
     private int team1Id;
     private int team2Id;
@@ -90,11 +90,11 @@ public class Match {
         this.matchTime = matchTime;
     }
 
-    public int getResultBet() {
+    public String getResultBet() {
         return resultBet;
     }
 
-    public void setResultBet(int resultBet) {
+    public void setResultBet(String resultBet) {
         this.resultBet = resultBet;
     }
 
@@ -160,5 +160,10 @@ public class Match {
 
     public void setTeam2Id(int team2Id) {
         this.team2Id = team2Id;
+    }
+
+    public String toString() {
+        return "match = id : " + id + ", team1 =  " + team1 + ", team2 = " + team2 + ", team1Id =  " + team1Id + ", team2Id = " + team2Id +
+                ", resultBet = " + resultBet;
     }
 }

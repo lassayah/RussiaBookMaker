@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import russiabookmaker.perso.com.russiabookmaker.adapter.CategoryAdapter;
 import russiabookmaker.perso.com.russiabookmaker.service.Receiver;
@@ -79,18 +80,18 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
         fragmentTransaction.add(R.id.matchOfDay_container, cFragment);
         fragmentTransaction.commit();
 
-        /*Calendar cal=Calendar.getInstance();
-        cal.set(Calendar.MONTH,(5));
-        cal.set(Calendar.YEAR,2015);
-        cal.set(Calendar.DAY_OF_MONTH, 27);
-        cal.set(Calendar.HOUR_OF_DAY,13);
-        cal.set(Calendar.MINUTE,00);
-
+        Calendar cal=Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.set(Calendar.MONTH,(10));
+        cal.set(Calendar.YEAR,2016);
+        cal.set(Calendar.DAY_OF_MONTH, 10);
+        cal.set(Calendar.HOUR_OF_DAY,17);
+        cal.set(Calendar.MINUTE,27);
         Intent intent = new Intent(this, Receiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 001, intent, 0);
 
         AlarmManager alarmManager1 = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager1.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);*/
+        alarmManager1.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
     }
 
 

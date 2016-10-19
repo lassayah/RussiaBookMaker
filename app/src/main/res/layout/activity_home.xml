@@ -36,6 +36,18 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/top4_container"
+        android:orientation="vertical"></LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/top4Button"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/top4Button"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/currentRank_container"
         android:orientation="vertical">
 

@@ -32,6 +32,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public TextView team2TextView;
         public TextView resultTeam1TextView;
         public TextView resultTeam2TextView;
+        public TextView resultBetTextView;
         public ViewHolder(View v) {
             super(v);
            //categoryTextView = (TextView) v.findViewById(R.id.categoryTextView);
@@ -39,6 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             team2TextView = (TextView) v.findViewById(R.id.team2Label);
             resultTeam1TextView = (TextView) v.findViewById(R.id.resultTeam1);
             resultTeam2TextView = (TextView) v.findViewById(R.id.resultTeam2);
+            resultBetTextView = (TextView) v.findViewById(R.id.resultBet);
         }
     }
 
@@ -72,6 +74,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.team2TextView.setText(mDataset.get(position).getTeam2());
         holder.resultTeam1TextView.setText(String.valueOf(mDataset.get(position).getResultTeam1()));
         holder.resultTeam2TextView.setText(String.valueOf(mDataset.get(position).getResultTeam2()));
+        if (mDataset.get(position).getResultBet() == null)
+            holder.resultBetTextView.setText("Non parié");
+        else
+            holder.resultBetTextView.setText(mDataset.get(position).getResultBet());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

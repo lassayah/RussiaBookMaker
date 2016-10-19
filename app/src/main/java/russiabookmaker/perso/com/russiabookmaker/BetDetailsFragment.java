@@ -67,8 +67,6 @@ public class BetDetailsFragment extends Fragment {
     private Button team2ImageButton;
     private Button nulImageButton;
     private Match match;
-    private LinearLayout matchLayout;
-    private LinearLayout noMatchLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -128,8 +126,6 @@ public class BetDetailsFragment extends Fragment {
         nulImageButton = (Button) v.findViewById(R.id.nulImageButton);
         team1ImageView = (ImageView) v.findViewById(R.id.team1DetailImageView);
         team2ImageView = (ImageView) v.findViewById(R.id.team2DetailImageView);
-        matchLayout = (LinearLayout) v.findViewById(R.id.matchTodayLayout);
-        noMatchLayout = (LinearLayout) v.findViewById(R.id.noMatchLayout);
         callService(position);
 
 
@@ -173,7 +169,11 @@ public class BetDetailsFragment extends Fragment {
                 if (response.body().getBetOk().equals("late"))
                     message = "Trop tard...";
                 else if (response.body().getBetOk().equals("true"))
+                {
                     message = "Pari envoyé";
+                    DBHelper mydb = new DBHelper(getContext());
+                    mydb.updateResult(match.getId(), response.body().getResultBet());
+                }
                 else
                     message = "Erreur d'envoi";
                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();

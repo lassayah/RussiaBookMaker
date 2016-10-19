@@ -15,22 +15,32 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/matchTodayLayout">
+        android:id="@+id/matchTodayLayout"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/flagsLayout">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/team1DetailImageView"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/line"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/team2DetailImageView"
-        android:layout_toRightOf="@+id/team1DetailImageView"/>
+        android:id="@+id/team2DetailImageView" />
+        </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/team1DetailImageView">
+        android:layout_below="@+id/flagsLayout">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,17 +55,6 @@
             android:id="@+id/nulImageButton"/>
 
     </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/noMatchLayout"
-        android:visibility="gone">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/noMatchToday"
-            android:text="@string/noMatch"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,8 +46,11 @@ public class CategoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String pseudo;
     private String filter = "global";
+    private CategoryAdapter categoryAdapter;
+    private ArrayList<Match> mList;
     private int position;
-    private DBHelper mydb ;
+    private DBHelper mydb;
+    private LinearLayout noMatchLayout;
 
     private OnCategoryFragmentInteractionListener mListener;
     private RecyclerView categoriesList;
@@ -98,6 +102,7 @@ public class CategoryFragment extends Fragment {
         categories.add("Demi-finales");
         categories.add("Finale et petite finale");*/
         categoriesList = (RecyclerView)v.findViewById(R.id.categoryList);
+        noMatchLayout = (LinearLayout) v.findViewById(R.id.noMatchLayout);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         categoriesList.setLayoutManager(mLayoutManager);
         mydb = new DBHelper(getContext());
@@ -110,6 +115,20 @@ public class CategoryFragment extends Fragment {
     public void onItemClick(int id) {
         if (mListener != null) {
             mListener.onItemSelected(id);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (categoryAdapter != null) {
+            mList.clear();
+            System.out.println("size of get all matchs = " + mydb.getAllMatchs().size());
+            for (Match match : mydb.getAllMatchs())
+                mList.add(match);
+            //mList = mydb.getAllMatchs();
+            System.out.println("size of get all matchs list = " + mList.size());
+            categoryAdapter.notifyDataSetChanged();
         }
     }
 
@@ -154,31 +173,47 @@ public class CategoryFragment extends Fragment {
         call.enqueue(new Callback<List<Match>>(){
             @Override
             public void onResponse(Call<List<Match>> call, Response<List<Match>> response) {
-                ArrayList<Match> mList = new ArrayList<Match>();
-                for (int i = 0; i < response.body().size(); i++)
-                {
-                    Match match = new Match();
-                    match.setTeam1(response.body().get(i).getTeam1());
-                    match.setTeam2(response.body().get(i).getTeam2());
-                    match.setResultTeam1(response.body().get(i).getResultTeam1());
-                    match.setResultTeam2(response.body().get(i).getResultTeam2());
-                    match.setId(response.body().get(i).getId());
-                    match.setProlongations(response.body().get(i).isProlongations());
-                    match.setMatchTime(response.body().get(i).getMatchTime());
-                    match.setDateServeur(response.body().get(i).getDateServeur());
-                    match.setFlag1(response.body().get(i).getFlag1());
-                    match.setFlag2(response.body().get(i).getFlag2());
-                    match.setGroup(response.body().get(i).getGroup());
-                    DateFormat f = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE);
-                    //SimpleDateFormat parseFormat = new SimpleDateFormat("EEEE dd MMMM HH:mm", Locale.FRENCH);
-                    SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    mydb.insertMatch(response.body().get(i).getTeam1(), response.body().get(i).getTeam2(), response.body().get(i).getFlag1(),
-                            response.body().get(i).getFlag2(), parseFormat.format(response.body().get(i).getMatchTime()), response.body().get(i).getResultTeam1(),
-                            response.body().get(i).getResultTeam2(), response.body().get(i).isProlongations(), response.body().get(i).getId(),
-                            response.body().get(i).getTeam1Id(), response.body().get(i).getTeam2Id());
-                    mList.add(match);
+                mList = new ArrayList<Match>();
+                System.out.println("response size : " + response.body().size());
+                if (response.body().size() > 0) {
+                    for (int i = 0; i < response.body().size(); i++) {
+                        Match match = new Match();
+                        match.setTeam1(response.body().get(i).getTeam1());
+                        match.setTeam2(response.body().get(i).getTeam2());
+                        match.setResultTeam1(response.body().get(i).getResultTeam1());
+                        match.setResultTeam2(response.body().get(i).getResultTeam2());
+                        match.setId(response.body().get(i).getId());
+                        match.setProlongations(response.body().get(i).isProlongations());
+                        match.setMatchTime(response.body().get(i).getMatchTime());
+                        match.setDateServeur(response.body().get(i).getDateServeur());
+                        match.setFlag1(response.body().get(i).getFlag1());
+                        match.setFlag2(response.body().get(i).getFlag2());
+                        match.setGroup(response.body().get(i).getGroup());
+                        match.setResultBet(response.body().get(i).getResultBet());
+                        DateFormat f = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE);
+                        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        if (mydb.getMatch(response.body().get(i).getId() - 1) == null) {
+                            mydb.insertMatch(response.body().get(i).getTeam1(), response.body().get(i).getTeam2(), response.body().get(i).getFlag1(),
+                                    response.body().get(i).getFlag2(), parseFormat.format(response.body().get(i).getMatchTime()), response.body().get(i).getResultTeam1(),
+                                    response.body().get(i).getResultTeam2(), response.body().get(i).isProlongations(), response.body().get(i).getId(),
+                                    response.body().get(i).getTeam1Id(), response.body().get(i).getTeam2Id(), response.body().get(i).getResultBet());
+                        }
+                        else
+                        {
+                            mydb.updateMatch(response.body().get(i).getId(), response.body().get(i).getTeam1(), response.body().get(i).getTeam2(),
+                                    parseFormat.format(response.body().get(i).getMatchTime()), response.body().get(i).getFlag1(),
+                                    response.body().get(i).getFlag2(), response.body().get(i).getResultTeam1(),
+                                    response.body().get(i).getResultTeam2(), response.body().get(i).isProlongations());
+                        }
+                        mList.add(match);
+                    }
                 }
-                CategoryAdapter categoryAdapter = new CategoryAdapter(mList, mListener);
+                else
+                {
+                    categoriesList.setVisibility(View.GONE);
+                    noMatchLayout.setVisibility(View.VISIBLE);
+                }
+                categoryAdapter = new CategoryAdapter(mList, mListener);
                 categoriesList.setAdapter(categoryAdapter);
             }
             @Override

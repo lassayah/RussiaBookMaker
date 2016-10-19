@@ -41,5 +41,11 @@
         android:id="@+id/team2Label"
         android:layout_toRightOf="@+id/resultTeam2"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultBet"
+        android:layout_toRightOf="@+id/team2Label"/>
+
     </RelativeLayout>
 </LinearLayout>

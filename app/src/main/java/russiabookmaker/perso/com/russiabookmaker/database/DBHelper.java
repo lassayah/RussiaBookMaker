@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentValues;
@@ -37,6 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SCHEDULE_COLUMN_RESULTTEAM2 = "resultteam2";
     public static final String SCHEDULE_COLUMN_MATCHTIME = "matchtime";
     public static final String SCHEDULE_COLUMN_OVERTIME = "overtime";
+    public static final String SCHEDULE_COLUMN_RESULTBET = "resultbet";
     private HashMap hp;
 
     public DBHelper(Context context)
@@ -54,7 +56,7 @@ public class DBHelper extends SQLiteOpenHelper {
                         " text, " + SCHEDULE_COLUMN_FLAG2 + " text, " + SCHEDULE_COLUMN_MATCHTIME +
                         " text, " + SCHEDULE_COLUMN_RESULTTEAM1 + " integer, " + SCHEDULE_COLUMN_RESULTTEAM2 +
                         " integer, " + SCHEDULE_COLUMN_OVERTIME + " boolean, " + SCHEDULE_COLUMN_TEAM1ID + " integer, " +
-                        SCHEDULE_COLUMN_TEAM2ID + " integer)"
+                        SCHEDULE_COLUMN_TEAM2ID + " integer, " + SCHEDULE_COLUMN_RESULTBET + " text)"
         );
     }
 
@@ -66,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertMatch  (String team1, String team2, String flag1, String flag2 , String matchtime, int resultteam1, int resultteam2,
-                                 boolean overtime, int match_id, int team1Id, int team2Id)
+                                 boolean overtime, int match_id, int team1Id, int team2Id, String resultbet)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -80,14 +82,36 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(SCHEDULE_COLUMN_RESULTTEAM1, resultteam1);
         contentValues.put(SCHEDULE_COLUMN_RESULTTEAM2, resultteam2);
         contentValues.put(SCHEDULE_COLUMN_OVERTIME, overtime);
-        //contentValues.put(SCHEDULE_COLUMN_ID, match_id);
+        contentValues.put(SCHEDULE_COLUMN_RESULTBET, resultbet);
+        contentValues.put(SCHEDULE_COLUMN_ID, match_id);
         db.insert(SCHEDULE_TABLE_NAME, null, contentValues);
+        db.close();
         return true;
+    }
+
+    public ArrayList<Match> getAllMatchs(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Match> matchs = new ArrayList<Match>();
+        Cursor cursor =  db.rawQuery( "select " + SCHEDULE_COLUMN_ID + " from " + SCHEDULE_TABLE_NAME, null );
+        if (cursor .moveToFirst()) {
+
+            while (cursor.isAfterLast() == false) {
+                Integer id = cursor.getInt(cursor.getColumnIndex(SCHEDULE_COLUMN_ID));
+
+                matchs.add(getMatch(id - 1));
+                cursor.moveToNext();
+            }
+        }
+        if (!cursor.isClosed()) {
+            cursor.close();
+        }
+        db.close();
+        return matchs;
+
     }
 
     public Match getMatch(int id){
         int newid = id + 1;
-        System.out.println("get id " + id);
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from " + SCHEDULE_TABLE_NAME +" where " + SCHEDULE_COLUMN_ID + " = " + newid, null );
         res.moveToFirst();
@@ -95,13 +119,11 @@ public class DBHelper extends SQLiteOpenHelper {
             Match match = new Match();
             //String dateYear = res.getString(res.getColumnIndex(SCHEDULE_COLUMN_MATCHTIME)).concat(" 2018");
             String dateYear = res.getString(res.getColumnIndex(SCHEDULE_COLUMN_MATCHTIME));
-            System.out.println("dateYear : " + dateYear);
             SimpleDateFormat parseFormat = new SimpleDateFormat("EEEE dd MMMM HH:mm yyyy", Locale.FRENCH);
             try {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 //Date date = parseFormat.parse(dateYear);
                 Date date = dateFormat.parse(dateYear);
-                System.out.println("date : " + date);
                 match.setMatchTime(date);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -109,18 +131,25 @@ public class DBHelper extends SQLiteOpenHelper {
             match.setTeam1(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_TEAM1)));
             match.setTeam2(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_TEAM2)));
             match.setFlag1(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG1)));
-            match.setFlag1(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG2)));
+            match.setFlag2(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG2)));
             match.setId(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_ID)));
             match.setTeam2Id(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_TEAM2ID)));
             match.setTeam1Id(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_TEAM1ID)));
+            match.setResultTeam1(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_RESULTTEAM1)));
+            match.setResultTeam2(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_RESULTTEAM2)));
+            //match.setProlongations(res.get);
+            //match.setDateServeur(response.body().get(i).getDateServeur());
+            //match.setGroup(response.body().get(i).getGroup());
+            match.setResultBet(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_RESULTBET)));
             //match.setMatchTime(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_MATCHTIME)));
-            System.out.println("get team 1 " + match.getTeam1());
             if (!res.isClosed()) {
                 res.close();
             }
+            db.close();
             return match;
         }
-        return new Match();
+        else
+            return null;
     }
 
     public int numberOfRows(){
@@ -142,6 +171,16 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(SCHEDULE_COLUMN_RESULTTEAM1, resultteam1);
         contentValues.put(SCHEDULE_COLUMN_RESULTTEAM2, resultteam2);
         db.update(SCHEDULE_TABLE_NAME, contentValues, SCHEDULE_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
+        db.close();
+        return true;
+    }
+
+    public boolean updateResult (Integer id, String resultBet)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SCHEDULE_COLUMN_RESULTBET, resultBet);
+        db.update(SCHEDULE_TABLE_NAME, contentValues, SCHEDULE_COLUMN_ID + " = ? ", new String[] {Integer.toString(id)});
         return true;
     }
 
@@ -153,24 +192,4 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] { Integer.toString(id) });
     }
 
-    public ArrayList<Match> getAllMatchs()
-    {
-        ArrayList<Match> array_list = new ArrayList<Match>();
-
-        //hp = new HashMap();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from " + SCHEDULE_TABLE_NAME, null );
-        res.moveToFirst();
-
-        while(res.isAfterLast() == false){
-            Match match = new Match();
-            match.setFlag1(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG1)));
-            match.setFlag2(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG2)));
-            match.setResultTeam1(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_RESULTTEAM1)));
-            match.setResultTeam2(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_RESULTTEAM2)));
-            array_list.add(match);
-            res.moveToNext();
-        }
-        return array_list;
-    }
 }
