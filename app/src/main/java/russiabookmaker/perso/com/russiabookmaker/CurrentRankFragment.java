@@ -86,8 +86,9 @@ public class CurrentRankFragment extends Fragment {
         call.enqueue(new Callback<Ranking>(){
             @Override
             public void onResponse(Call<Ranking> call, Response<Ranking> response) {
+                Ranking rank = response.body();
                 TextView userRank = (TextView) fragmentView.findViewById(R.id.userRank);
-                userRank.setText(response.body().getRank());
+                userRank.setText(rank.getRank());
             }
             @Override
             public void onFailure(Call<Ranking> call, Throwable t) {

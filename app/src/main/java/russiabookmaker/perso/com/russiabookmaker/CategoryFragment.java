@@ -177,33 +177,21 @@ public class CategoryFragment extends Fragment {
                 System.out.println("response size : " + response.body().size());
                 if (response.body().size() > 0) {
                     for (int i = 0; i < response.body().size(); i++) {
-                        Match match = new Match();
-                        match.setTeam1(response.body().get(i).getTeam1());
-                        match.setTeam2(response.body().get(i).getTeam2());
-                        match.setResultTeam1(response.body().get(i).getResultTeam1());
-                        match.setResultTeam2(response.body().get(i).getResultTeam2());
-                        match.setId(response.body().get(i).getId());
-                        match.setProlongations(response.body().get(i).isProlongations());
-                        match.setMatchTime(response.body().get(i).getMatchTime());
-                        match.setDateServeur(response.body().get(i).getDateServeur());
-                        match.setFlag1(response.body().get(i).getFlag1());
-                        match.setFlag2(response.body().get(i).getFlag2());
-                        match.setGroup(response.body().get(i).getGroup());
-                        match.setResultBet(response.body().get(i).getResultBet());
+                        Match match = response.body().get(i);
                         DateFormat f = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE);
                         SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         if (mydb.getMatch(response.body().get(i).getId() - 1) == null) {
-                            mydb.insertMatch(response.body().get(i).getTeam1(), response.body().get(i).getTeam2(), response.body().get(i).getFlag1(),
-                                    response.body().get(i).getFlag2(), parseFormat.format(response.body().get(i).getMatchTime()), response.body().get(i).getResultTeam1(),
-                                    response.body().get(i).getResultTeam2(), response.body().get(i).isProlongations(), response.body().get(i).getId(),
-                                    response.body().get(i).getTeam1Id(), response.body().get(i).getTeam2Id(), response.body().get(i).getResultBet());
+                            mydb.insertMatch(match.getTeam1(), match.getTeam2(), match.getFlag1(),
+                                    match.getFlag2(), parseFormat.format(match.getMatchTime()), match.getResultTeam1(),
+                                    match.getResultTeam2(), match.isProlongations(), match.getId(),
+                                    match.getTeam1Id(), match.getTeam2Id(), match.getResultBet());
                         }
                         else
                         {
-                            mydb.updateMatch(response.body().get(i).getId(), response.body().get(i).getTeam1(), response.body().get(i).getTeam2(),
-                                    parseFormat.format(response.body().get(i).getMatchTime()), response.body().get(i).getFlag1(),
-                                    response.body().get(i).getFlag2(), response.body().get(i).getResultTeam1(),
-                                    response.body().get(i).getResultTeam2(), response.body().get(i).isProlongations());
+                            mydb.updateMatch(match.getId(), match.getTeam1(), match.getTeam2(),
+                                    parseFormat.format(match.getMatchTime()), match.getFlag1(),
+                                    match.getFlag2(), match.getResultTeam1(),
+                                    match.getResultTeam2(), match.isProlongations());
                         }
                         mList.add(match);
                     }

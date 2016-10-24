@@ -1,27 +1,84 @@
 package russiabookmaker.perso.com.russiabookmaker.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import russiabookmaker.perso.com.russiabookmaker.R;
 import russiabookmaker.perso.com.russiabookmaker.model.Team;
+import russiabookmaker.perso.com.russiabookmaker.rest.RetrofitBuilder;
 
 /**
  * Created by versusmind on 20/10/2016.
  */
 
-public class Top4Adapter extends RecyclerView.Adapter<Top4Adapter.ViewHolder> {
+public class Top4Adapter extends /*RecyclerView.Adapter<Top4Adapter.ViewHolder>*/ BaseAdapter {
 
     private ArrayList<Team> mDataset;
+    private Context mContext;
 
-    // Provide a reference to the views for each data item
+    public Top4Adapter(ArrayList<Team> dataset, Context context)
+    {
+        mDataset = dataset;
+        mContext = context;
+    }
+
+    public ViewHolder holder;
+
+    public static class ViewHolder {
+        public ImageView flag;
+        public TextView team;
+    }
+
+    @Override
+    public int getCount() {
+        return mDataset.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
+        holder = null;
+        LayoutInflater inflater = (LayoutInflater) mContext
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null)
+        {
+            holder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.top4_item, viewGroup, false);
+            holder.flag = (ImageView) convertView.findViewById(R.id.top4TitleFlag);
+            holder.team = (TextView) convertView.findViewById(R.id.top4TitleItem);
+            convertView.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        holder.team.setText(mDataset.get(i).getName());
+        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(i).getFlag()).into(holder.flag);
+        return convertView;
+    }
+
+    /*// Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,5 +116,5 @@ public class Top4Adapter extends RecyclerView.Adapter<Top4Adapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mDataset.size();
-    }
+    }*/
 }

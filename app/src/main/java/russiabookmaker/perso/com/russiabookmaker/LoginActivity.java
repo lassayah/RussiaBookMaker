@@ -89,7 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.body().isLoggedIn()) {
+                        User user = response.body();
+                        if (user.isLoggedIn()) {
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPref.edit();
