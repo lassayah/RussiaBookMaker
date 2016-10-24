@@ -31,10 +31,12 @@ import russiabookmaker.perso.com.russiabookmaker.service.Receiver;
  * Created by versusmind on 05/09/16.
  */
 public class HomeActivity extends AppCompatActivity implements MatchOfDayFragment.OnMatchOfDayFragmentInteractionListener,
-        CurrentRankFragment.OnCurrentRankFragmentInteractionListener, BetDetailsFragment.OnFragmentInteractionListener, CategoryFragment.OnCategoryFragmentInteractionListener {
+        CurrentRankFragment.OnCurrentRankFragmentInteractionListener, BetDetailsFragment.OnFragmentInteractionListener,
+        CategoryFragment.OnCategoryFragmentInteractionListener, Top4Fragment.OnFragmentInteractionListener {
 
     String pseudo = "";
     Button betButton;
+    private Button goToTop4;
     private Button goToRanking;
 
     @Override
@@ -66,6 +68,16 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
             }
         });
 
+        goToTop4 = (Button) findViewById(R.id.top4Button);
+
+        goToTop4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, Top4Activity.class);
+                startActivity(intent);
+            }
+        });
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //MatchOfDayFragment modFragment = new MatchOfDayFragment();
@@ -78,6 +90,9 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
 
         CategoryFragment cFragment = CategoryFragment.newInstance(0, "day");
         fragmentTransaction.add(R.id.matchOfDay_container, cFragment);
+
+        Top4Fragment t4Fragment = new Top4Fragment();
+        fragmentTransaction.add(R.id.top4_container, t4Fragment);
         fragmentTransaction.commit();
 
         Calendar cal=Calendar.getInstance();

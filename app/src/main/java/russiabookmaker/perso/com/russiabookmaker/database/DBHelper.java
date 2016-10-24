@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
+import russiabookmaker.perso.com.russiabookmaker.model.Team;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -39,6 +40,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SCHEDULE_COLUMN_MATCHTIME = "matchtime";
     public static final String SCHEDULE_COLUMN_OVERTIME = "overtime";
     public static final String SCHEDULE_COLUMN_RESULTBET = "resultbet";
+    public static final String TEAM_COLUMN_NAME = "name";
+    public static final String TEAM_COLUMN_FLAG = "flag";
+    public static final String TEAM_COLUMN_ID = "id";
+    public static final String TEAM_TABLE_NAME = "team";
+
     private HashMap hp;
 
     public DBHelper(Context context)
@@ -57,6 +63,12 @@ public class DBHelper extends SQLiteOpenHelper {
                         " text, " + SCHEDULE_COLUMN_RESULTTEAM1 + " integer, " + SCHEDULE_COLUMN_RESULTTEAM2 +
                         " integer, " + SCHEDULE_COLUMN_OVERTIME + " boolean, " + SCHEDULE_COLUMN_TEAM1ID + " integer, " +
                         SCHEDULE_COLUMN_TEAM2ID + " integer, " + SCHEDULE_COLUMN_RESULTBET + " text)"
+        );
+
+        db.execSQL(
+                "create table " + TEAM_TABLE_NAME +
+                        "(" + TEAM_COLUMN_ID + " integer primary key, " + TEAM_COLUMN_NAME +
+                        " text, " + TEAM_COLUMN_FLAG + " text)"
         );
     }
 
@@ -89,6 +101,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean insertTeam(String name, String flag, int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TEAM_COLUMN_FLAG, flag);
+        contentValues.put(TEAM_COLUMN_NAME, name);
+        contentValues.put(TEAM_COLUMN_ID, id);
+        db.insert(TEAM_TABLE_NAME, null, contentValues);
+        db.close();
+        return true;
+    }
+
     public ArrayList<Match> getAllMatchs(){
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Match> matchs = new ArrayList<Match>();
@@ -108,6 +132,32 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return matchs;
 
+    }
+
+    public ArrayList<Team> getAllTeams()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Team> teams = new ArrayList<Team>();
+        Cursor cursor = db.rawQuery("select " + TEAM_COLUMN_ID + ", " + TEAM_COLUMN_FLAG + ",  " + TEAM_COLUMN_NAME +
+                " from " + TEAM_TABLE_NAME, null);
+        if (cursor.moveToFirst()) {
+            while (cursor.isAfterLast() == false)
+            {
+                Team team = new Team();
+                team.setFlag(cursor.getString(cursor.getColumnIndex(TEAM_COLUMN_FLAG)));
+                team.setName(cursor.getString(cursor.getColumnIndex(TEAM_COLUMN_NAME)));
+                teams.add(team);
+                cursor.moveToNext();
+            }
+        }
+        if (!cursor.isClosed()) {
+            cursor.close();
+        }
+        db.close();
+        if (teams.size() > 0)
+            return teams;
+        else
+            return null;
     }
 
     public Match getMatch(int id){
@@ -171,6 +221,18 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(SCHEDULE_COLUMN_RESULTTEAM1, resultteam1);
         contentValues.put(SCHEDULE_COLUMN_RESULTTEAM2, resultteam2);
         db.update(SCHEDULE_TABLE_NAME, contentValues, SCHEDULE_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
+        db.close();
+        return true;
+    }
+
+    public boolean updateTeam(Integer id, String name, String flag)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TEAM_COLUMN_FLAG, flag);
+        contentValues.put(TEAM_COLUMN_NAME, name);
+        contentValues.put(TEAM_COLUMN_ID, id);
+        db.update(TEAM_TABLE_NAME, contentValues, TEAM_COLUMN_ID + " = ? ", new String[] { Integer.toString(id)});
         db.close();
         return true;
     }

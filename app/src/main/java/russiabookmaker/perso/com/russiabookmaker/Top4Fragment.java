@@ -1,12 +1,23 @@
 package russiabookmaker.perso.com.russiabookmaker;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import russiabookmaker.perso.com.russiabookmaker.model.Top4;
+import russiabookmaker.perso.com.russiabookmaker.rest.Top4Service;
 
 
 /**
@@ -26,6 +37,13 @@ public class Top4Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String pseudo;
+    private TextView team1TextView;
+    private TextView team2TextView;
+    private TextView team3TextView;
+    private TextView team4TextView;
+    private LinearLayout noTop4Layout;
+    private LinearLayout top4Layout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -64,7 +82,17 @@ public class Top4Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_top4, container, false);
+        View v = inflater.inflate(R.layout.fragment_top4, container, false);
+        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
+        pseudo = sharedPref.getString(getString(R.string.login), "user");
+        team1TextView = (TextView) v.findViewById(R.id.firstTeam);
+        team2TextView = (TextView) v.findViewById(R.id.secondTeam);
+        team3TextView = (TextView) v.findViewById(R.id.thirdTeam);
+        team4TextView = (TextView) v.findViewById(R.id.fourthTeam);
+        noTop4Layout = (LinearLayout) v.findViewById(R.id.noTop4Layout);
+        top4Layout = (LinearLayout) v.findViewById(R.id.top4Layout);
+        callService();
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -72,6 +100,35 @@ public class Top4Fragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void callService(){
+        final Top4Service top4Service = Top4Service.retrofit.create(Top4Service.class);
+        final Call<Top4> call = top4Service.callTop4(pseudo);
+        call.enqueue(new Callback<Top4>(){
+            @Override
+            public void onResponse(Call<Top4> call, Response<Top4> response) {
+                if (response.body().getTeam1() != "" && response.body().getTeam2() != "" && response.body().getTeam3() != "" &&
+                        response.body().getTeam4() != "") {
+                    noTop4Layout.setVisibility(View.GONE);
+                    top4Layout.setVisibility(View.VISIBLE);
+                    team1TextView.setText(response.body().getTeam1());
+                    team2TextView.setText(response.body().getTeam2());
+                    team3TextView.setText(response.body().getTeam3());
+                    team4TextView.setText(response.body().getTeam4());
+                }
+                else
+                {
+                    noTop4Layout.setVisibility(View.VISIBLE);
+                    top4Layout.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onFailure(Call<Top4> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+                Log.d("callko", t.getCause().toString());
+            }
+        });
     }
 
     @Override

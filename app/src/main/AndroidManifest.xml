@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,10 +40,20 @@
         <activity
             android:name=".BetDetailsActivity"
             android:label="@string/title_activity_bet_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <service android:name=".service.Receiver" android:enabled="true">
-            <intent-filter> <action android:name="NOTIFICATION_SERVICE" /></intent-filter>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".service.Receiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="NOTIFICATION_SERVICE" />
+            </intent-filter>
         </service>
+
+        <activity
+            android:name=".Top4Activity"
+            android:label="@string/title_activity_top4"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

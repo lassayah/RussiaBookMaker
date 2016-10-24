@@ -27,6 +27,7 @@
     <string name="login">username</string>
     <string name="noMatch">Pas de match aujourd\'hui</string>
     <string name="top4Button">Faites votre Top4</string>
+    <string name="noTop4">Vous n\'avez pas encore fait votre top4</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -36,4 +37,5 @@
     <string name="title_activity_global_ranking">GlobalRanking</string>
     <string name="title_activity_bet">BetActivity</string>
     <string name="title_activity_bet_details">BetDetailsActivity</string>
+    <string name="title_activity_top4">Top4Activity</string>
 </resources>
