@@ -16,8 +16,5 @@ public interface TeamsService {
     @GET("getTeams.php")
     Call<List<Team>> callTeams();
 
-    public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+    public static final Retrofit retrofit = RetrofitBuilder.setBaseUrl();
 }
