@@ -11,7 +11,7 @@ public class RetrofitBuilder {
 
     public static Retrofit  setBaseUrl(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/")
+                .baseUrl("http://10.0.2.2:80/russiabookmaker/webservices/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit;
