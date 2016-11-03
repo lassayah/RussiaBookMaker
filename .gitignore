@@ -8,3 +8,4 @@
 /captures
 .idea/vcs.xml
 .idea/misc.xml
+app/src/main/java/russiabookmaker/perso/com/russiabookmaker/rest/RetrofitBuilder.java

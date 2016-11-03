@@ -70,21 +70,18 @@ public class Top4Activity extends AppCompatActivity {
             public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
                 tList = new ArrayList<Team>();
                     for (int i = 0; i < response.body().size(); i++) {
-                        Team team = new Team();
-                        team.setFlag(response.body().get(i).getFlag());
-                        team.setName(response.body().get(i).getName());
-                        team.setId(response.body().get(i).getId());
+                        Team team = response.body().get(i);
                         if (mydb.getAllTeams() == null) {
-                            mydb.insertTeam(response.body().get(i).getName(), response.body().get(i).getFlag(), response.body().get(i).getId());
+                            mydb.insertTeam(team.getName(), team.getFlag(), team.getId());
                         }
                         else
                         {
-                            mydb.updateTeam(response.body().get(i).getId(), response.body().get(i).getName(), response.body().get(i).getFlag());
+                            mydb.updateTeam(team.getId(), team.getName(), team.getFlag());
                         }
                         tList.add(team);
                     }
-                Top4Adapter top4Adapter = new Top4Adapter(tList);
-                //top4Grid.setAdapter(top4Adapter);
+                Top4Adapter top4Adapter = new Top4Adapter(tList, getApplicationContext());
+                top4Grid.setAdapter(top4Adapter);
             }
             @Override
             public void onFailure(Call<List<Team>> call, Throwable t) {

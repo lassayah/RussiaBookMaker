@@ -29,6 +29,7 @@ import russiabookmaker.perso.com.russiabookmaker.R;
 import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
 import russiabookmaker.perso.com.russiabookmaker.rest.BetService;
+import russiabookmaker.perso.com.russiabookmaker.rest.RetrofitBuilder;
 
 /**
  * Created by versusmind on 14/09/16.
@@ -117,8 +118,8 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         DateFormat f = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE);
         SimpleDateFormat parseFormat = new SimpleDateFormat("EEEE dd MMMM HH:mm", Locale.FRENCH);
         holder.matchTimeTextView.setText(parseFormat.format(mDataset.get(position).getMatchTime()));*/
-        Picasso.with(mContext).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + mDataset.get(position).getFlag1()).into(holder.team1ImageView);
-        Picasso.with(mContext).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + mDataset.get(position).getFlag2()).into(holder.team2ImageView);
+        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(position).getFlag1()).into(holder.team1ImageView);
+        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(position).getFlag2()).into(holder.team2ImageView);
         holder.team1ImageButton.setText(match.getTeam1());
         holder.team2ImageButton.setText(match.getTeam2());
         holder.nulImageButton.setText("Nul");

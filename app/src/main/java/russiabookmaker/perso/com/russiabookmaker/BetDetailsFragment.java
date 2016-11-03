@@ -36,6 +36,7 @@ import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
 import russiabookmaker.perso.com.russiabookmaker.rest.BetService;
 import russiabookmaker.perso.com.russiabookmaker.rest.MatchService;
+import russiabookmaker.perso.com.russiabookmaker.rest.RetrofitBuilder;
 
 
 /**
@@ -164,15 +165,16 @@ public class BetDetailsFragment extends Fragment {
         call.enqueue(new Callback<Match>(){
             @Override
             public void onResponse(Call<Match> call, Response<Match> response) {
-                System.out.println("response : " + response.body().getBetOk());
+                Match match = response.body();
+                System.out.println("response : " + match.getBetOk());
                 String message = "";
-                if (response.body().getBetOk().equals("late"))
+                if (match.getBetOk().equals("late"))
                     message = "Trop tard...";
-                else if (response.body().getBetOk().equals("true"))
+                else if (match.getBetOk().equals("true"))
                 {
                     message = "Pari envoyé";
                     DBHelper mydb = new DBHelper(getContext());
-                    mydb.updateResult(match.getId(), response.body().getResultBet());
+                    mydb.updateResult(match.getId(), match.getResultBet());
                 }
                 else
                     message = "Erreur d'envoi";
@@ -231,8 +233,8 @@ public class BetDetailsFragment extends Fragment {
         }*/
 
         //System.out.println("get team 1 " + match.getTeam1());
-        Picasso.with(getContext()).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + match.getFlag1()).into(team1ImageView);
-        Picasso.with(getContext()).load("http://10.0.2.2:8888/DesktopRussiaBookMaker/webservices/" + match.getFlag2()).into(team2ImageView);
+        Picasso.with(getContext()).load(RetrofitBuilder.baseUrl + match.getFlag1()).into(team1ImageView);
+        Picasso.with(getContext()).load(RetrofitBuilder.baseUrl + match.getFlag2()).into(team2ImageView);
         team1ImageButton.setText(match.getTeam1());
         team2ImageButton.setText(match.getTeam2());
         nulImageButton.setText("Nul");
