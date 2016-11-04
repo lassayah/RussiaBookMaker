@@ -165,16 +165,17 @@ public class BetDetailsFragment extends Fragment {
         call.enqueue(new Callback<Match>(){
             @Override
             public void onResponse(Call<Match> call, Response<Match> response) {
-                Match match = response.body();
-                System.out.println("response : " + match.getBetOk());
+                Match resMatch = response.body();
+                System.out.println("response : " + resMatch.getBetOk());
                 String message = "";
-                if (match.getBetOk().equals("late"))
+                if (resMatch.getBetOk().equals("late"))
                     message = "Trop tard...";
-                else if (match.getBetOk().equals("true"))
+                else if (resMatch.getBetOk().equals("true"))
                 {
                     message = "Pari envoyé";
                     DBHelper mydb = new DBHelper(getContext());
-                    mydb.updateResult(match.getId(), match.getResultBet());
+                    System.out.println("result bet resMatch : " + resMatch.getResultBet());
+                    mydb.updateResult(match.getId(), resMatch.getResultBet());
                 }
                 else
                     message = "Erreur d'envoi";

@@ -198,8 +198,10 @@ public class DBHelper extends SQLiteOpenHelper {
             db.close();
             return match;
         }
-        else
+        else {
+            db.close();
             return null;
+        }
     }
 
     public int numberOfRows(){
@@ -242,7 +244,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SCHEDULE_COLUMN_RESULTBET, resultBet);
-        db.update(SCHEDULE_TABLE_NAME, contentValues, SCHEDULE_COLUMN_ID + " = ? ", new String[] {Integer.toString(id)});
+        int result = db.update(SCHEDULE_TABLE_NAME, contentValues, SCHEDULE_COLUMN_ID + " = ? ", new String[] {String.valueOf(id)});
+        db.close();
         return true;
     }
 

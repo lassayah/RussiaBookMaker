@@ -3,13 +3,16 @@ package russiabookmaker.perso.com.russiabookmaker;
 
 
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.IdRes;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -17,9 +20,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -151,6 +156,24 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void logout(){
+        DialogFragment newFragment = MyAlertDialogFragment.newInstance(
+                R.string.logout_question);
+        newFragment.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
     public void onMatchOfDayFragmentInteraction(Uri uri) {
 
     }
@@ -175,5 +198,54 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
             intent.putExtra("matchId", id);
             intent.putExtra("filter", "global");
             startActivity(intent);
+    }
+
+    public void doPositiveClick(){
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(getString(R.string.login));
+        editor.commit();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void doNegativeClick(){
+
+    }
+
+    public static class MyAlertDialogFragment extends DialogFragment {
+
+        public static MyAlertDialogFragment newInstance(int title) {
+            MyAlertDialogFragment frag = new MyAlertDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("title", title);
+            frag.setArguments(args);
+            return frag;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            int title = getArguments().getInt("title");
+
+            return new AlertDialog.Builder(getActivity())
+                    .setIcon(R.drawable.france)
+                    .setTitle(title)
+                    .setPositiveButton(R.string.yes,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    ((HomeActivity)getActivity()).doPositiveClick();
+                                }
+                            }
+                    )
+                    .setNegativeButton(R.string.no,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    ((HomeActivity)getActivity()).doNegativeClick();
+                                }
+                            }
+                    )
+                    .create();
+        }
     }
 }

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/betsMenu"
-    android:title="@string/betsMenu"
+<item android:id="@+id/logout"
+    android:title="@string/logout"
     ></item>
-    <item android:id="@+id/topMenu"
-        android:title="@string/topMenu"
-        ></item>
-    <item android:id="@+id/rankMenu"
-        android:title="@string/rankMenu"
-        ></item>
 </menu>

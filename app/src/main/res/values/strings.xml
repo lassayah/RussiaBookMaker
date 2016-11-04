@@ -28,6 +28,10 @@
     <string name="login">username</string>
     <string name="noMatch">Pas de match aujourd\'hui</string>
     <string name="top4Button">Je fais mon Top4</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="logout_question">Voulez-vous vous déconnecter ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
     <string name="noTop4">Vous n\'avez pas encore fait votre top4</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
