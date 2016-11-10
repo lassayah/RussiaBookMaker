@@ -134,6 +134,43 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean hasTeam(String name)
+    {
+        boolean result = false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select " + TEAM_COLUMN_ID +
+                " from " + TEAM_TABLE_NAME + " where " + TEAM_COLUMN_NAME + " like '" + name + "'", null);
+        System.out.println("team : " + name);
+        System.out.println("cursor : " + cursor.getCount());
+        if (cursor.moveToFirst())
+            result = true;
+        if (!cursor.isClosed()) {
+            cursor.close();
+        }
+        db.close();
+        return result;
+    }
+
+    public Team getTeam(int id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TEAM_TABLE_NAME + " where " + TEAM_COLUMN_ID + " = " + id, null);
+        if (cursor.moveToFirst())
+        {
+            Team team = new Team();
+            team.setId(cursor.getInt(cursor.getColumnIndex(TEAM_COLUMN_ID)));
+            team.setFlag(cursor.getString(cursor.getColumnIndex(TEAM_COLUMN_FLAG)));
+            team.setName(cursor.getString(cursor.getColumnIndex(TEAM_COLUMN_NAME)));
+            return team;
+        }
+        else
+        {
+            cursor.close();
+            db.close();
+            return null;
+        }
+    }
+
     public ArrayList<Team> getAllTeams()
     {
         SQLiteDatabase db = this.getReadableDatabase();

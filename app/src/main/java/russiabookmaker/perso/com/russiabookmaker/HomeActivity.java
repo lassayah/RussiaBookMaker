@@ -22,6 +22,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,10 +33,19 @@ import android.widget.TextView;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import russiabookmaker.perso.com.russiabookmaker.adapter.CategoryAdapter;
+import russiabookmaker.perso.com.russiabookmaker.adapter.Top4Adapter;
+import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
+import russiabookmaker.perso.com.russiabookmaker.model.Team;
+import russiabookmaker.perso.com.russiabookmaker.rest.TeamsService;
 import russiabookmaker.perso.com.russiabookmaker.service.Receiver;
 
 /**
@@ -56,6 +66,8 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        populateTeams();
 
         /*TextView bonjourLogin = (TextView)findViewById(R.id.bonjourLogin);
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
@@ -212,6 +224,34 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
 
     public void doNegativeClick(){
 
+    }
+
+    private void populateTeams(){
+        final DBHelper mydb = new DBHelper(getApplicationContext());
+        mydb.getWritableDatabase();
+        TeamsService teamsService = TeamsService.retrofit.create(TeamsService.class);
+        final Call<List<Team>> call = teamsService.callTeams();
+        call.enqueue(new Callback<List<Team>>(){
+            @Override
+            public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
+                for (int i = 0; i < response.body().size(); i++) {
+                    Team team = response.body().get(i);
+                    if (mydb.getTeam(team.getId()) == null) {
+                        mydb.insertTeam(team.getName(), team.getFlag(), team.getId());
+                    }
+                    else
+                    {
+                        mydb.updateTeam(team.getId(), team.getName(), team.getFlag());
+                    }
+
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Team>> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+                Log.d("callko", t.getCause().toString());
+            }
+        });
     }
 
     public static class MyAlertDialogFragment extends DialogFragment {

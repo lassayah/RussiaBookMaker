@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import russiabookmaker.perso.com.russiabookmaker.adapter.CategoryAdapter;
-import russiabookmaker.perso.com.russiabookmaker.adapter.MatchAdapter;
+import russiabookmaker.perso.com.russiabookmaker.adapter.CategorySectionAdapter;
 import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
 import russiabookmaker.perso.com.russiabookmaker.model.Match;
 import russiabookmaker.perso.com.russiabookmaker.rest.MatchService;
@@ -46,7 +46,7 @@ public class CategoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String pseudo;
     private String filter = "global";
-    private CategoryAdapter categoryAdapter;
+    private CategorySectionAdapter categoryAdapter;
     private ArrayList<Match> mList;
     private int position;
     private DBHelper mydb;
@@ -201,7 +201,10 @@ public class CategoryFragment extends Fragment {
                     categoriesList.setVisibility(View.GONE);
                     noMatchLayout.setVisibility(View.VISIBLE);
                 }
-                categoryAdapter = new CategoryAdapter(mList, mListener);
+                //categoryAdapter = new CategoryAdapter(mList, mListener);
+                //categoriesList.setAdapter(categoryAdapter);
+
+                categoryAdapter = new CategorySectionAdapter(mList, mListener, getContext());
                 categoriesList.setAdapter(categoryAdapter);
             }
             @Override

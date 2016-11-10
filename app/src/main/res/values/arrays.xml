@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories_names">
+        <item>Premiers matchs</item>
+        <item>Deuxièmes matchs</item>
+        <item>Troisièmes matchs</item>
+        <item>Huitièmes de finale</item>
+        <item>Quarts de finale</item>
+        <item>Demi-finales</item>
+        <item>Petite finale</item>
+        <item>Finale</item>
+
+        </string-array>
+
+    <integer-array name="categories_id">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </integer-array>
+    </resources>

@@ -71,7 +71,7 @@ public class Top4Activity extends AppCompatActivity {
                 tList = new ArrayList<Team>();
                     for (int i = 0; i < response.body().size(); i++) {
                         Team team = response.body().get(i);
-                        if (mydb.getAllTeams() == null) {
+                        if (mydb.getTeam(team.getId()) == null) {
                             mydb.insertTeam(team.getName(), team.getFlag(), team.getId());
                         }
                         else
