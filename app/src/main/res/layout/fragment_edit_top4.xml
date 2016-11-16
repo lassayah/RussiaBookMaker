@@ -1,20 +1,78 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="russiabookmaker.perso.com.russiabookmaker.EditTop4Fragment">
+    android:id="@+id/content_edit_top4"
+    tools:context="russiabookmaker.perso.com.russiabookmaker.top4.EditTop4Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/top4Title"/>
+        android:id="@+id/top4Title"
+        android:text="@string/top4Title"/>
     <GridView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/top4Grid"
         android:numColumns="4"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/top4Title">
     </GridView>
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top4Grid"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/premierTop4"
+            android:text="@string/premier"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/premierTop4Edit"
+            android:layout_below="@+id/premierTop4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/deuxiemeTop4"
+            android:text="@string/deuxieme"
+            android:layout_toRightOf="@+id/premierTop4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/deuxiemeTop4Edit"
+            android:layout_below="@+id/premierTop4"
+            android:layout_toRightOf="@+id/premierTop4Edit"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/troisiemeTop4"
+            android:layout_below="@+id/premierTop4Edit"
+            android:text="@string/troisieme"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/troisiemeTop4Edit"
+            android:layout_below="@+id/troisiemeTop4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quatriemeTop4"
+            android:layout_below="@+id/deuxiemeTop4Edit"
+            android:layout_toRightOf="@+id/troisiemeTop4"
+            android:text="@string/quatrieme"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quatriemeTop4Edit"
+            android:layout_below="@+id/quatriemeTop4"
+            android:layout_toRightOf="@+id/troisiemeTop4Edit"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

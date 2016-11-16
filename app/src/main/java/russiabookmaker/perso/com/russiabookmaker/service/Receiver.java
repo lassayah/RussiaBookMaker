@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import russiabookmaker.perso.com.russiabookmaker.LoginActivity;
+import russiabookmaker.perso.com.russiabookmaker.login.LoginActivity;
 import russiabookmaker.perso.com.russiabookmaker.R;
 
 /**

@@ -36,6 +36,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="top4Title">Faites votre Top 4</string>
+    <string name="premier">1er</string>
+    <string name="deuxieme">2ème</string>
+    <string name="troisieme">3ème</string>
+    <string name="quatrieme">4ème</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

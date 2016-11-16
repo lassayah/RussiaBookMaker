@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="russiabookmaker.perso.com.russiabookmaker.Top4Fragment">
+    tools:context="russiabookmaker.perso.com.russiabookmaker.top4.Top4Fragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

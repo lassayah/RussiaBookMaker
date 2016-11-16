@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="russiabookmaker.perso.com.russiabookmaker.Top4Activity"
+    tools:context="russiabookmaker.perso.com.russiabookmaker.top4.Top4Activity"
     tools:showIn="@layout/activity_top4">
 
     <!--<android.support.v7.widget.RecyclerView
@@ -22,14 +22,67 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/top4Title"/>
+        android:id="@+id/top4Title"
+        android:text="@string/top4Title"/>
     <GridView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/top4Grid"
         android:numColumns="4"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/top4Title">
     </GridView>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top4Grid">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/premierTop4"
+            android:text="@string/premier"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/premierTop4Edit"
+            android:layout_below="@+id/premierTop4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/deuxiemeTop4"
+            android:text="@string/deuxieme"
+            android:layout_toRightOf="@+id/premierTop4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/deuxiemeTop4Edit"
+            android:layout_below="@+id/premierTop4"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/troisiemeTop4"
+            android:layout_below="@+id/premierTop4Edit"
+            android:text="@string/troisieme"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/troisiemeTop4Edit"
+            android:layout_below="@+id/troisiemeTop4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quatriemeTop4"
+            android:layout_below="@+id/troisiemeTop4Edit"
+            android:text="@string/quatrieme"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quatriemeTop4Edit"
+            android:layout_below="@+id/quatriemeTop4"/>
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

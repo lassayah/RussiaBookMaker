@@ -2,10 +2,7 @@ package russiabookmaker.perso.com.russiabookmaker;
 
 
 
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,37 +13,35 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import russiabookmaker.perso.com.russiabookmaker.adapter.CategoryAdapter;
-import russiabookmaker.perso.com.russiabookmaker.adapter.Top4Adapter;
+import russiabookmaker.perso.com.russiabookmaker.bet.BetActivity;
+import russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsActivity;
+import russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsFragment;
 import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
-import russiabookmaker.perso.com.russiabookmaker.model.Team;
-import russiabookmaker.perso.com.russiabookmaker.rest.TeamsService;
-import russiabookmaker.perso.com.russiabookmaker.service.Receiver;
+import russiabookmaker.perso.com.russiabookmaker.login.LoginActivity;
+import russiabookmaker.perso.com.russiabookmaker.teams.Team;
+import russiabookmaker.perso.com.russiabookmaker.ranking.CurrentRankFragment;
+import russiabookmaker.perso.com.russiabookmaker.ranking.GlobalRankingFragment;
+import russiabookmaker.perso.com.russiabookmaker.teams.TeamsService;
+import russiabookmaker.perso.com.russiabookmaker.teams.CategoryFragment;
+import russiabookmaker.perso.com.russiabookmaker.teams.MatchOfDayFragment;
+import russiabookmaker.perso.com.russiabookmaker.top4.EditTop4Fragment;
+import russiabookmaker.perso.com.russiabookmaker.top4.Top4Fragment;
 
 /**
  * Created by versusmind on 05/09/16.

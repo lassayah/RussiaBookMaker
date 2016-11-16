@@ -1,48 +1,46 @@
-package russiabookmaker.perso.com.russiabookmaker;
+package russiabookmaker.perso.com.russiabookmaker.ranking;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import russiabookmaker.perso.com.russiabookmaker.bet.BetActivity;
-import russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsActivity;
-import russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsFragment;
-import russiabookmaker.perso.com.russiabookmaker.ranking.CurrentRankFragment;
-import russiabookmaker.perso.com.russiabookmaker.teams.CategoryFragment;
-import russiabookmaker.perso.com.russiabookmaker.top4.Top4Fragment;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import russiabookmaker.perso.com.russiabookmaker.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DashboardFragment.OnFragmentInteractionListener} interface
+ * {@link GlobalRankingFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DashboardFragment#newInstance} factory method to
+ * Use the {@link GlobalRankingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragment extends Fragment implements CategoryFragment.OnCategoryFragmentInteractionListener {
+public class GlobalRankingFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private RecyclerView rankingList;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String pseudo = "";
 
     private OnFragmentInteractionListener mListener;
 
-    public DashboardFragment() {
+    public GlobalRankingFragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +50,11 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DashboardFragment.
+     * @return A new instance of fragment GlobalRankingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static GlobalRankingFragment newInstance(String param1, String param2) {
+        GlobalRankingFragment fragment = new GlobalRankingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,27 +75,56 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View v = inflater.inflate(R.layout.fragment_global_ranking, container, false);
 
-        TextView bonjourLogin = (TextView)v.findViewById(R.id.bonjourLogin);
-        SharedPreferences sharedPref = v.getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
-        pseudo = sharedPref.getString(getString(R.string.login), "user");
-        bonjourLogin.setText("Bonjour " + pseudo);
+        rankingList = (RecyclerView) v.findViewById(R.id.rankRecyclerView);
 
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        rankingList.setHasFixedSize(true);
 
-        FragmentManager fragmentManager = getChildFragmentManager();
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
+        rankingList.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        RankingService rankingService = RankingService.retrofit.create(RankingService.class);
+        final Call<List<Ranking>> call = rankingService.callRanking();
+        call.enqueue(new Callback<List<Ranking>>() {
+            @Override
+            public void onResponse(Call<List<Ranking>> call, Response<List<Ranking>> response) {
+                ArrayList<Ranking> rankList = new ArrayList<Ranking>();
+                for (int i = 0; i < response.body().size(); i++)
+                {
+                    Ranking ranking = new Ranking();
+                    ranking.setUser(response.body().get(i).getUser());
+                    ranking.setRank(response.body().get(i).getRank());
+                    rankList.add(ranking);
+                }
+                RankingAdapter rankingAdapter = new RankingAdapter(rankList);
+                rankingList.setAdapter(rankingAdapter);
+            }
+            @Override
+            public void onFailure(Call<List<Ranking>> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+            }
+        });
+        /*FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        CategoryFragment cFragment = CategoryFragment.newInstance(0, "day");
-        fragmentTransaction.add(R.id.matchOfDay_container, cFragment);
         CurrentRankFragment crFragment = new CurrentRankFragment();
-        fragmentTransaction.add(R.id.currentRank_container, crFragment);
-        Top4Fragment t4Fragment = new Top4Fragment();
-        fragmentTransaction.add(R.id.top4_container, t4Fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.add(R.id.global_ranking_container, crFragment);
+        fragmentTransaction.commit();*/
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+
         return v;
     }
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -121,23 +148,6 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onItemSelected(int id) {
-        System.out.println("id = " + id);
-        System.out.println("go to next screen");
-        BetDetailsFragment displayFrag = (BetDetailsFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.betDetailsFragment);
-        Intent intent = new Intent(this.getContext(), BetDetailsActivity.class);
-        //intent.putExtra("position", position);
-        intent.putExtra("matchId", id);
-        intent.putExtra("filter", "global");
-        startActivity(intent);
     }
 
     /**

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="russiabookmaker.perso.com.russiabookmaker.BetDetailsFragment">
+    tools:context="russiabookmaker.perso.com.russiabookmaker.bet.BetActivity$BetDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

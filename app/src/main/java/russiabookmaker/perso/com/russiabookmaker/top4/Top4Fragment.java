@@ -1,35 +1,32 @@
-package russiabookmaker.perso.com.russiabookmaker;
+package russiabookmaker.perso.com.russiabookmaker.top4;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import russiabookmaker.perso.com.russiabookmaker.bet.BetActivity;
-import russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsActivity;
-import russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsFragment;
-import russiabookmaker.perso.com.russiabookmaker.ranking.CurrentRankFragment;
-import russiabookmaker.perso.com.russiabookmaker.teams.CategoryFragment;
-import russiabookmaker.perso.com.russiabookmaker.top4.Top4Fragment;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import russiabookmaker.perso.com.russiabookmaker.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DashboardFragment.OnFragmentInteractionListener} interface
+ * {@link Top4Fragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link DashboardFragment#newInstance} factory method to
+ * Use the {@link Top4Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragment extends Fragment implements CategoryFragment.OnCategoryFragmentInteractionListener {
+public class Top4Fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,11 +35,17 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private String pseudo = "";
+    private String pseudo;
+    private TextView team1TextView;
+    private TextView team2TextView;
+    private TextView team3TextView;
+    private TextView team4TextView;
+    private LinearLayout noTop4Layout;
+    private LinearLayout top4Layout;
 
     private OnFragmentInteractionListener mListener;
 
-    public DashboardFragment() {
+    public Top4Fragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +55,11 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment DashboardFragment.
+     * @return A new instance of fragment Top4Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static Top4Fragment newInstance(String param1, String param2) {
+        Top4Fragment fragment = new Top4Fragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,33 +80,53 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
-        TextView bonjourLogin = (TextView)v.findViewById(R.id.bonjourLogin);
-        SharedPreferences sharedPref = v.getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
+        View v = inflater.inflate(R.layout.fragment_top4, container, false);
+        SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
         pseudo = sharedPref.getString(getString(R.string.login), "user");
-        bonjourLogin.setText("Bonjour " + pseudo);
-
-
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        CategoryFragment cFragment = CategoryFragment.newInstance(0, "day");
-        fragmentTransaction.add(R.id.matchOfDay_container, cFragment);
-        CurrentRankFragment crFragment = new CurrentRankFragment();
-        fragmentTransaction.add(R.id.currentRank_container, crFragment);
-        Top4Fragment t4Fragment = new Top4Fragment();
-        fragmentTransaction.add(R.id.top4_container, t4Fragment);
-        fragmentTransaction.commit();
+        team1TextView = (TextView) v.findViewById(R.id.firstTeam);
+        team2TextView = (TextView) v.findViewById(R.id.secondTeam);
+        team3TextView = (TextView) v.findViewById(R.id.thirdTeam);
+        team4TextView = (TextView) v.findViewById(R.id.fourthTeam);
+        noTop4Layout = (LinearLayout) v.findViewById(R.id.noTop4Layout);
+        top4Layout = (LinearLayout) v.findViewById(R.id.top4Layout);
+        callService();
         return v;
     }
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void callService(){
+        final Top4Service top4Service = Top4Service.retrofit.create(Top4Service.class);
+        final Call<Top4> call = top4Service.callTop4(pseudo);
+        call.enqueue(new Callback<Top4>(){
+            @Override
+            public void onResponse(Call<Top4> call, Response<Top4> response) {
+                if (response.body().getTeam1() != "" && response.body().getTeam2() != "" && response.body().getTeam3() != "" &&
+                        response.body().getTeam4() != "") {
+                    noTop4Layout.setVisibility(View.GONE);
+                    top4Layout.setVisibility(View.VISIBLE);
+                    team1TextView.setText(response.body().getTeam1());
+                    team2TextView.setText(response.body().getTeam2());
+                    team3TextView.setText(response.body().getTeam3());
+                    team4TextView.setText(response.body().getTeam4());
+                }
+                else
+                {
+                    noTop4Layout.setVisibility(View.VISIBLE);
+                    top4Layout.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onFailure(Call<Top4> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+                Log.d("callko", t.getCause().toString());
+            }
+        });
     }
 
     @Override
@@ -121,23 +144,6 @@ public class DashboardFragment extends Fragment implements CategoryFragment.OnCa
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onItemSelected(int id) {
-        System.out.println("id = " + id);
-        System.out.println("go to next screen");
-        BetDetailsFragment displayFrag = (BetDetailsFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.betDetailsFragment);
-        Intent intent = new Intent(this.getContext(), BetDetailsActivity.class);
-        //intent.putExtra("position", position);
-        intent.putExtra("matchId", id);
-        intent.putExtra("filter", "global");
-        startActivity(intent);
     }
 
     /**

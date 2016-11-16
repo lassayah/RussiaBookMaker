@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="russiabookmaker.perso.com.russiabookmaker.BetDetailsActivity"
+    tools:context="russiabookmaker.perso.com.russiabookmaker.bet.BetDetailsActivity"
     tools:showIn="@layout/activity_bet_details">
 
     <LinearLayout

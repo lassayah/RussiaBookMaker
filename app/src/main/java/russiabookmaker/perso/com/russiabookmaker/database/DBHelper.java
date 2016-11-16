@@ -4,14 +4,11 @@ package russiabookmaker.perso.com.russiabookmaker.database;
  * Created by versusmind on 27/09/2016.
  */
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Locale;
 
 import android.content.ContentValues;
@@ -21,8 +18,8 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 
-import russiabookmaker.perso.com.russiabookmaker.model.Match;
-import russiabookmaker.perso.com.russiabookmaker.model.Team;
+import russiabookmaker.perso.com.russiabookmaker.bet.Match;
+import russiabookmaker.perso.com.russiabookmaker.teams.Team;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -140,8 +137,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select " + TEAM_COLUMN_ID +
                 " from " + TEAM_TABLE_NAME + " where " + TEAM_COLUMN_NAME + " like '" + name + "'", null);
-        System.out.println("team : " + name);
-        System.out.println("cursor : " + cursor.getCount());
         if (cursor.moveToFirst())
             result = true;
         if (!cursor.isClosed()) {

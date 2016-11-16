@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true"
-tools:context="russiabookmaker.perso.com.russiabookmaker.BetActivity">
+tools:context="russiabookmaker.perso.com.russiabookmaker.bet.BetActivity">
 
 <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
@@ -32,17 +32,17 @@ tools:context="russiabookmaker.perso.com.russiabookmaker.BetActivity">
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="russiabookmaker.perso.com.russiabookmaker.BetActivity"
+        tools:context="russiabookmaker.perso.com.russiabookmaker.bet.BetActivity"
         tools:showIn="@layout/activity_bet">
 
         <!-- "Fragment A" -->
-        <fragment class="russiabookmaker.perso.com.russiabookmaker.CategoryFragment"
+        <fragment class="russiabookmaker.perso.com.russiabookmaker.teams.CategoryFragment"
             android:id="@+id/categoryFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <!-- "Fragment B" -->
-        <fragment class="russiabookmaker.perso.com.russiabookmaker.BetDetailsFragment"
+        <fragment class="russiabookmaker.perso.com.russiabookmaker.bet.BetActivity$BetDetailsFragment"
             android:id="@+id/betDetailsFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
