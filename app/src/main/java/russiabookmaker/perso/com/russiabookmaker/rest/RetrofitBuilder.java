@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitBuilder {
 
     //public static String baseUrl = "http://10.0.2.2:80/russiabookmaker/webservices/";
-    public static String baseUrl = "http://10.0.2.2:80/russiabookmaker/webservices/";
+    public static String baseUrl = "http://10.0.2.2:8888/DesktopRussiaBookmaker/webservices/";
     public static Retrofit  setBaseUrl(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

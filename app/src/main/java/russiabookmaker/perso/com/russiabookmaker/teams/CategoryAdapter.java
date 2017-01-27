@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import russiabookmaker.perso.com.russiabookmaker.R;
 import russiabookmaker.perso.com.russiabookmaker.bet.Match;
@@ -58,6 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
+
 
 
     // Replace the contents of a view (invoked by the layout manager)

@@ -156,6 +156,8 @@ public class DBHelper extends SQLiteOpenHelper {
             team.setId(cursor.getInt(cursor.getColumnIndex(TEAM_COLUMN_ID)));
             team.setFlag(cursor.getString(cursor.getColumnIndex(TEAM_COLUMN_FLAG)));
             team.setName(cursor.getString(cursor.getColumnIndex(TEAM_COLUMN_NAME)));
+            cursor.close();
+            db.close();
             return team;
         }
         else
@@ -271,14 +273,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateResult (Integer id, String resultBet)
+    public int updateResult (Integer id, String resultBet)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(SCHEDULE_COLUMN_RESULTBET, resultBet);
         int result = db.update(SCHEDULE_TABLE_NAME, contentValues, SCHEDULE_COLUMN_ID + " = ? ", new String[] {String.valueOf(id)});
         db.close();
-        return true;
+        return result;
     }
 
     public Integer deleteMatch (Integer id)
