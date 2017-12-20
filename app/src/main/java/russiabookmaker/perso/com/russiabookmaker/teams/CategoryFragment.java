@@ -123,11 +123,14 @@ public class CategoryFragment extends Fragment {
         if (categoryAdapter != null) {
             mList.clear();
             System.out.println("size of get all matchs = " + mydb.getAllMatchs().size());
-            for (Match match : mydb.getAllMatchs())
+            for (Match match : mydb.getAllMatchs()) {
                 mList.add(match);
+                System.out.println(match.getResultBet());
+            }
             //mList = mydb.getAllMatchs();
             System.out.println("size of get all matchs list = " + mList.size());
-            categoryAdapter.notifyDataSetChanged();
+            categoryAdapter.notify(mList);
+            //categoryAdapter.notifyItemChanged(2);//notifyDataSetChanged();
         }
     }
 

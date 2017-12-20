@@ -53,6 +53,10 @@
         <activity
             android:name=".top4.Top4Activity"
             android:label="@string/title_activity_top4"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".login.SubscriptionActivity"
+            android:label="@string/title_activity_subscription"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

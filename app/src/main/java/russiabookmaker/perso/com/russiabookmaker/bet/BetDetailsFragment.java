@@ -162,7 +162,7 @@ public class BetDetailsFragment extends Fragment {
                     message = "Pari envoyé";
                     DBHelper mydb = new DBHelper(getContext());
                     System.out.println("result bet resMatch : " + resMatch.getResultBet());
-                    mydb.updateResult(match.getId(), resMatch.getResultBet());
+                    System.out.println("update result db " + mydb.updateResult(match.getId(), resMatch.getResultBet()));
                 }
                 else
                     message = "Erreur d'envoi";

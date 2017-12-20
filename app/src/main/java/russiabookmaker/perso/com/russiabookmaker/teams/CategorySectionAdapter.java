@@ -12,6 +12,7 @@ import com.tonicartos.superslim.GridSLM;
 import com.tonicartos.superslim.LinearSLM;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import russiabookmaker.perso.com.russiabookmaker.R;
 import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
@@ -121,6 +122,30 @@ public class CategorySectionAdapter extends RecyclerView.Adapter<CategorySection
         }
         ViewHolder vh = new ViewHolder(v);
         return vh;
+    }
+
+    public void notify(List<Match> categories){
+        int [] sectionId = mContext.getResources().getIntArray(R.array.categories_id);
+        String lastHeader = "";
+        int sectionManager = 0;
+        int headerCount = 0;
+        int sectionFirstPosition = 0;
+        mItems.clear();
+        for (int i = 0; i < categories.size(); i++)
+        {
+            if (headerCount < 8) {
+                if (sectionId[headerCount] == getCategory(categories.get(i).getId()) || i == 0) {
+                    String section = sectionNames[headerCount];
+                    sectionManager = (sectionManager + 1) % 2;
+                    sectionFirstPosition = i + headerCount;
+                    lastHeader = section;
+                    headerCount++;
+                    mItems.add(new LineItem(null, true, sectionManager, sectionFirstPosition, section));
+                }
+            }
+            mItems.add(new LineItem(categories.get(i), false, sectionManager, sectionFirstPosition, null));
+        }
+        notifyDataSetChanged();
     }
 
     @Override
