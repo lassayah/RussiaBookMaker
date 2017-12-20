@@ -32,11 +32,11 @@
     <string name="logout_question">Voulez-vous vous déconnecter ?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="noTop4">Vous n\'avez pas encore fait votre top4</string>
+    <string name="noTop4">Vous n\'avez pas encore choisi votre top4</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="top4Title">Faites votre Top 4</string>
+    <string name="top4Title">Choisissez votre Top 4</string>
     <string name="premier">1er</string>
     <string name="deuxieme">2ème</string>
     <string name="troisieme">3ème</string>

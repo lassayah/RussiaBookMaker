@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,9 +42,7 @@
         <View
             style="@style/Divider"
             android:id="@+id/divider1"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginTop="10dp" />
 
 
         <LinearLayout
@@ -51,15 +50,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/top4_container"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_marginTop="50dp">
         </LinearLayout>
 
         <View
             style="@style/Divider"
             android:id="@+id/divider2"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" />
+            android:layout_marginTop="10dp" />
 
 
         <LinearLayout
@@ -67,8 +64,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/currentRank_container"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
+            android:layout_marginTop="50dp">
         </LinearLayout>
+
+        <View
+            style="@style/Divider"
+            android:id="@+id/divider3"
+            android:layout_marginTop="10dp" />
+
     </LinearLayout>
 </FrameLayout>
