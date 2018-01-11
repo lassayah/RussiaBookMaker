@@ -13,12 +13,12 @@
     tools:context="russiabookmaker.perso.com.russiabookmaker.top4.Top4Activity"
     tools:showIn="@layout/activity_top4">
 
-    <!--<android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/top4List">
 
-    </android.support.v7.widget.RecyclerView>-->
+    </android.support.v7.widget.RecyclerView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

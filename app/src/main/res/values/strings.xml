@@ -14,6 +14,8 @@
     <string name="topMenu">Top 4</string>
     <string name="rankMenu">Classement</string>
     <string name="line">-</string>
+    <string name="ok">Ok</string>
+    <string name="error">Erreur</string>
     <string name="betButton">Je parie</string>
     <string name="matchOfDayTeam1">Equipe 1</string>
     <string name="matchOfDayTeam2">Equipe 2</string>
@@ -37,6 +39,10 @@
         completions."
     </string>
     <string name="top4Title">Choisissez votre Top 4</string>
+    <string name="top4AlertTitle">Votre top 4 est incomplet</string>
+    <string name="top4AlertMessage">Merci de compléter votre top 4.</string>
+    <string name="top4Sent">Votre top 4 a été enregistré.</string>
+    <string name="top4ServerError">Erreur dans l\'envoi de votre top 4.</string>
     <string name="premier">1er</string>
     <string name="deuxieme">2ème</string>
     <string name="troisieme">3ème</string>

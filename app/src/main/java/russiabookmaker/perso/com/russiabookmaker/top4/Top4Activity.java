@@ -21,7 +21,7 @@ import russiabookmaker.perso.com.russiabookmaker.teams.TeamsService;
 public class Top4Activity extends AppCompatActivity {
 
     private RecyclerView top4List;
-    private GridView top4Grid;
+    //private GridView top4Grid;
     private ArrayList<Team> tList;
     private DBHelper mydb;
 
@@ -43,7 +43,8 @@ public class Top4Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        top4Grid = (GridView) findViewById(R.id.top4Grid);
+        //top4Grid = (GridView) findViewById(R.id.top4Grid);
+        top4List = (RecyclerView) findViewById(R.id.top4List);
         mydb = new DBHelper(getApplicationContext());
         mydb.getWritableDatabase();
         callService();
@@ -76,8 +77,8 @@ public class Top4Activity extends AppCompatActivity {
                         }
                         tList.add(team);
                     }
-                Top4Adapter top4Adapter = new Top4Adapter(tList, getApplicationContext());
-                top4Grid.setAdapter(top4Adapter);
+                //Top4Adapter top4Adapter = new Top4Adapter(tList);
+                //top4List.setAdapter(top4Adapter);
             }
             @Override
             public void onFailure(Call<List<Team>> call, Throwable t) {

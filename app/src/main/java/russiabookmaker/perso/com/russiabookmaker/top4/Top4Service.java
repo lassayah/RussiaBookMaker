@@ -19,5 +19,16 @@ public interface Top4Service {
             @Field("username") String username
     );
 
+    @FormUrlEncoded
+    @POST("setTop4.php")
+    Call<Object> callSetTop4(
+            @Field("username") String username,
+            @Field("team1") String team1,
+            @Field("team2") String team2,
+            @Field("team3") String team3,
+            @Field("team4") String team4
+
+    );
+
     public static final Retrofit retrofit = RetrofitBuilder.setBaseUrl();
 }

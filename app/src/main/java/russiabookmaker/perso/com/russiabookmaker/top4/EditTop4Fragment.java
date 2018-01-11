@@ -5,13 +5,16 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ import russiabookmaker.perso.com.russiabookmaker.R;
 import russiabookmaker.perso.com.russiabookmaker.database.DBHelper;
 import russiabookmaker.perso.com.russiabookmaker.teams.Team;
 import russiabookmaker.perso.com.russiabookmaker.teams.TeamsService;
+import russiabookmaker.perso.com.russiabookmaker.utils.AlertDialogFragment;
 
 
 /**
@@ -39,15 +43,15 @@ public class EditTop4Fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private Top4Service top4Service;
     private RecyclerView top4List;
-    private GridView top4Grid;
+    //private GridView top4Grid;
     private ArrayList<Team> tList;
     private DBHelper mydb;
     private String pseudo;
-    private TextView team1TextView;
-    private TextView team2TextView;
-    private TextView team3TextView;
-    private TextView team4TextView;
+    private Top4Adapter top4Adapter;
+    private ArrayList<String> top4Teams;
+    private Button top4Button;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -93,36 +97,70 @@ public class EditTop4Fragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_edit_top4, container, false);
         SharedPreferences sharedPref = getContext().getSharedPreferences(getString(R.string.login), Context.MODE_PRIVATE);
         pseudo = sharedPref.getString(getString(R.string.login), "user");
-        top4Grid = (GridView) v.findViewById(R.id.top4Grid);
+        top4List = (RecyclerView) v.findViewById(R.id.top4List);
+        top4Teams = new ArrayList<>();
+        top4Button = (Button) v.findViewById(R.id.top4Button);
         mydb = new DBHelper(this.getContext());
         mydb.getWritableDatabase();
-        team1TextView = (TextView) v.findViewById(R.id.premierTop4Edit);
-        team2TextView = (TextView) v.findViewById(R.id.deuxiemeTop4Edit);
-        team3TextView = (TextView) v.findViewById(R.id.troisiemeTop4Edit);
-        team4TextView = (TextView) v.findViewById(R.id.quatriemeTop4Edit);
-        callService();
+        tList = new ArrayList<>();
+        top4Service = Top4Service.retrofit.create(Top4Service.class);
         getTop4();
 
+        top4Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(top4Teams);
+                if (top4Teams.contains(""))
+                {
+                    AlertDialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.top4AlertTitle), getString(R.string.top4AlertMessage));
+                    alertDialog.show(getFragmentManager(), "AlertDialogFragment");
+                }
+                else
+                {
+                    setTop4();
+                }
+
+            }
+        });
 
         return v;
     }
 
     private void getTop4() {
-        final Top4Service top4Service = Top4Service.retrofit.create(Top4Service.class);
+
         final Call<Top4> call = top4Service.callTop4(pseudo);
         call.enqueue(new Callback<Top4>(){
             @Override
             public void onResponse(Call<Top4> call, Response<Top4> response) {
-
-                    team1TextView.setText(response.body().getTeam1());
-                    team2TextView.setText(response.body().getTeam2());
-                    team3TextView.setText(response.body().getTeam3());
-                    team4TextView.setText(response.body().getTeam4());
+                    top4Teams.add(response.body().getTeam1());
+                    top4Teams.add(response.body().getTeam2());
+                    top4Teams.add(response.body().getTeam3());
+                    top4Teams.add(response.body().getTeam4());
+                    callService();
             }
             @Override
             public void onFailure(Call<Top4> call, Throwable t) {
                 Log.d("callko", t.getMessage());
                 Log.d("callko", t.getCause().toString());
+            }
+        });
+    }
+
+    private void setTop4() {
+        final Call<Object> call = top4Service.callSetTop4(pseudo, top4Teams.get(0), top4Teams.get(1), top4Teams.get(2), top4Teams.get(3));
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Toast.makeText(getContext(), R.string.top4Sent, Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("callko", t.getMessage());
+                Log.d("callko", String.valueOf(t.getCause()));
+                AlertDialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.error), getString(R.string.top4ServerError));
+                alertDialog.show(getFragmentManager(), "AlertDialogFragment");
             }
         });
     }
@@ -145,8 +183,16 @@ public class EditTop4Fragment extends Fragment {
                     }
                     tList.add(team);
                 }
-                Top4Adapter top4Adapter = new Top4Adapter(tList, getContext());
-                top4Grid.setAdapter(top4Adapter);
+                top4Adapter = new Top4Adapter(tList, top4Teams);
+                top4List.setHasFixedSize(true);
+                top4List.setAdapter(top4Adapter);
+                top4List.setLayoutManager(new LinearLayoutManager(getActivity()));
+                top4Adapter.setListener(new Top4Adapter.AdapterListener() {
+                    public void onClick(ArrayList<String> teams) {
+                        top4Teams = teams;
+
+                    }
+                } );
             }
             @Override
             public void onFailure(Call<List<Team>> call, Throwable t) {
