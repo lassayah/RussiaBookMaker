@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -147,16 +148,29 @@ public class EditTop4Fragment extends Fragment {
     }
 
     private void setTop4() {
-        final Call<Object> call = top4Service.callSetTop4(pseudo, top4Teams.get(0), top4Teams.get(1), top4Teams.get(2), top4Teams.get(3));
-        call.enqueue(new Callback<Object>() {
+        final Call<Map<String, Boolean>> call = top4Service.callSetTop4(pseudo, top4Teams.get(0), top4Teams.get(1), top4Teams.get(2), top4Teams.get(3));
+        call.enqueue(new Callback<Map<String, Boolean>>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                Toast.makeText(getContext(), R.string.top4Sent, Toast.LENGTH_LONG).show();
-
+            public void onResponse(Call<Map<String, Boolean>> call, Response<Map<String, Boolean>> response) {
+                if (response.body().containsKey("success"))
+                {
+                    if (response.body().get("success"))
+                        Toast.makeText(getContext(), R.string.top4Sent, Toast.LENGTH_LONG).show();
+                    else
+                    {
+                        AlertDialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.error), getString(R.string.top4ServerError));
+                        alertDialog.show(getFragmentManager(), "AlertDialogFragment");
+                    }
+                }
+                else
+                {
+                    AlertDialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.error), getString(R.string.top4ServerError));
+                    alertDialog.show(getFragmentManager(), "AlertDialogFragment");
+                }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<Map<String, Boolean>> call, Throwable t) {
                 Log.d("callko", t.getMessage());
                 Log.d("callko", String.valueOf(t.getCause()));
                 AlertDialogFragment alertDialog = AlertDialogFragment.newInstance(getString(R.string.error), getString(R.string.top4ServerError));
