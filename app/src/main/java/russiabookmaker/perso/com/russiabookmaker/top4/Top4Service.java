@@ -1,5 +1,8 @@
 package russiabookmaker.perso.com.russiabookmaker.top4;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.Field;
@@ -21,7 +24,7 @@ public interface Top4Service {
 
     @FormUrlEncoded
     @POST("setTop4.php")
-    Call<Object> callSetTop4(
+    Call<Map<String, Boolean>> callSetTop4(
             @Field("username") String username,
             @Field("team1") String team1,
             @Field("team2") String team2,
