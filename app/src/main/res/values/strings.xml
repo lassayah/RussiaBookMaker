@@ -38,7 +38,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="top4Title">Choisissez votre Top 4</string>
+    <string name="top4Title">Choisissez une équipe dans chaque colonne</string>
     <string name="top4AlertTitle">Votre top 4 est incomplet</string>
     <string name="top4AlertMessage">Merci de compléter votre top 4.</string>
     <string name="top4Sent">Votre top 4 a été enregistré.</string>

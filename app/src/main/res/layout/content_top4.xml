@@ -23,7 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/top4Title"
-        android:text="@string/top4Title"/>
+        android:text="@string/top4Title"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textSubtitle"/>
     <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

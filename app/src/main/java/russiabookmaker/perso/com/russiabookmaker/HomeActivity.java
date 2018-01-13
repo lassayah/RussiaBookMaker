@@ -244,7 +244,7 @@ public class HomeActivity extends AppCompatActivity implements MatchOfDayFragmen
             @Override
             public void onFailure(Call<List<Team>> call, Throwable t) {
                 Log.d("callko", t.getMessage());
-                Log.d("callko", t.getCause().toString());
+                Log.d("callko", String.valueOf(t.getCause()));
             }
         });
     }
