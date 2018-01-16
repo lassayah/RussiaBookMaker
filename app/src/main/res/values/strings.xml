@@ -5,6 +5,7 @@
     <string name="prompt_email">Login</string>
     <string name="login_title">Connectez-vous</string>
     <string name="login_title_bis">Mêmes identifiants que sur le site</string>
+    <string name="subscription_wrong_password">Les deux champs du mot de passe doivent être identiques.</string>
     <string name="currentRankTitle">Votre classement :</string>
     <string name="currentRankValue">1er</string>
     <string name="currentRankButton">Je consulte le classement</string>
