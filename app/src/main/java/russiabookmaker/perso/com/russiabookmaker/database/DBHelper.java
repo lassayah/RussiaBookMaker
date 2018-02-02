@@ -212,13 +212,11 @@ public class DBHelper extends SQLiteOpenHelper {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            match.setTeam1(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_TEAM1)));
-            match.setTeam2(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_TEAM2)));
-            match.setFlag1(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG1)));
-            match.setFlag2(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG2)));
+            match.setTeam1(new Team(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_TEAM1)), res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG1)),
+                    res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_TEAM1ID))));
+            match.setTeam2(new Team(res.getString(res.getColumnIndex(SCHEDULE_COLUMN_TEAM2)), res.getString(res.getColumnIndex(SCHEDULE_COLUMN_FLAG2)),
+                    res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_TEAM2ID))));
             match.setId(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_ID)));
-            match.setTeam2Id(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_TEAM2ID)));
-            match.setTeam1Id(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_TEAM1ID)));
             match.setResultTeam1(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_RESULTTEAM1)));
             match.setResultTeam2(res.getInt(res.getColumnIndex(SCHEDULE_COLUMN_RESULTTEAM2)));
             //match.setProlongations(res.get);

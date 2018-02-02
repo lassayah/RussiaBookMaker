@@ -183,16 +183,16 @@ public class CategoryFragment extends Fragment {
                         DateFormat f = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE);
                         SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         if (mydb.getMatch(response.body().get(i).getId() - 1) == null) {
-                            mydb.insertMatch(match.getTeam1(), match.getTeam2(), match.getFlag1(),
-                                    match.getFlag2(), parseFormat.format(match.getMatchTime()), match.getResultTeam1(),
+                            mydb.insertMatch(match.getTeam1().getName(), match.getTeam2().getName(), match.getTeam1().getFlag(),
+                                    match.getTeam2().getFlag(), parseFormat.format(match.getMatchTime()), match.getResultTeam1(),
                                     match.getResultTeam2(), match.isProlongations(), match.getId(),
-                                    match.getTeam1Id(), match.getTeam2Id(), match.getResultBet());
+                                    match.getTeam1().getId(), match.getTeam2().getId(), match.getResultBet());
                         }
                         else
                         {
-                            mydb.updateMatch(match.getId(), match.getTeam1(), match.getTeam2(),
-                                    parseFormat.format(match.getMatchTime()), match.getFlag1(),
-                                    match.getFlag2(), match.getResultTeam1(),
+                            mydb.updateMatch(match.getId(), match.getTeam1().getName(), match.getTeam2().getName(),
+                                    parseFormat.format(match.getMatchTime()), match.getTeam1().getFlag(),
+                                    match.getTeam2().getFlag(), match.getResultTeam1(),
                                     match.getResultTeam2(), match.isProlongations());
                         }
                         mList.add(match);

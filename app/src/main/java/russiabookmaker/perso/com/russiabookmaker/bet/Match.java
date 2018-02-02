@@ -2,13 +2,15 @@ package russiabookmaker.perso.com.russiabookmaker.bet;
 
 import java.util.Date;
 
+import russiabookmaker.perso.com.russiabookmaker.teams.Team;
+
 /**
  * Created by versusmind on 14/09/16.
  */
 public class Match {
 
-    private String team1;
-    private String team2;
+    private Team team1;
+    private Team team2;
     private int resultTeam1;
     private int resultTeam2;
     private int tabTeam1;
@@ -17,28 +19,24 @@ public class Match {
     private Date matchTime;
     private String resultBet;
     private int id;
-    private int team1Id;
-    private int team2Id;
     private String group;
     private Date dateServeur;
     private String betOk;
-    private String flag1;
-    private String flag2;
 
 
-    public String getTeam1() {
+    public Team getTeam1() {
         return team1;
     }
 
-    public void setTeam1(String team1) {
+    public void setTeam1(Team team1) {
         this.team1 = team1;
     }
 
-    public String getTeam2() {
+    public Team getTeam2() {
         return team2;
     }
 
-    public void setTeam2(String team2) {
+    public void setTeam2(Team team2) {
         this.team2 = team2;
     }
 
@@ -130,40 +128,8 @@ public class Match {
         this.betOk = betOk;
     }
 
-    public String getFlag2() {
-        return flag2;
-    }
-
-    public void setFlag2(String flag2) {
-        this.flag2 = flag2;
-    }
-
-    public String getFlag1() {
-        return flag1;
-    }
-
-    public void setFlag1(String flag1) {
-        this.flag1 = flag1;
-    }
-
-    public int getTeam1Id() {
-        return team1Id;
-    }
-
-    public void setTeam1Id(int team1Id) {
-        this.team1Id = team1Id;
-    }
-
-    public int getTeam2Id() {
-        return team2Id;
-    }
-
-    public void setTeam2Id(int team2Id) {
-        this.team2Id = team2Id;
-    }
-
     public String toString() {
-        return "match = id : " + id + ", team1 =  " + team1 + ", team2 = " + team2 + ", team1Id =  " + team1Id + ", team2Id = " + team2Id +
+        return "match = id : " + id + ", team1 =  " + team1 + ", team2 = " + team2 +
                 ", resultBet = " + resultBet;
     }
 }

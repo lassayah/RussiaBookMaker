@@ -103,10 +103,10 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.ViewHolder> 
         DateFormat f = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE);
         SimpleDateFormat parseFormat = new SimpleDateFormat("EEEE dd MMMM HH:mm", Locale.FRENCH);
         holder.matchTimeTextView.setText(parseFormat.format(mDataset.get(position).getMatchTime()));*/
-        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(position).getFlag1()).into(holder.team1ImageView);
-        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(position).getFlag2()).into(holder.team2ImageView);
-        holder.team1ImageButton.setText(match.getTeam1());
-        holder.team2ImageButton.setText(match.getTeam2());
+        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(position).getTeam1().getFlag()).into(holder.team1ImageView);
+        Picasso.with(mContext).load(RetrofitBuilder.baseUrl + mDataset.get(position).getTeam2().getFlag()).into(holder.team2ImageView);
+        holder.team1ImageButton.setText(match.getTeam1().getName());
+        holder.team2ImageButton.setText(match.getTeam2().getName());
         holder.nulImageButton.setText("Nul");
         //final int id = mDataset.get(position).getId();
         //final Date matchTime = mDataset.get(position).getMatchTime();
