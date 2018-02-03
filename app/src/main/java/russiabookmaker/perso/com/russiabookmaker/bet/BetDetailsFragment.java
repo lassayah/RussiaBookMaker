@@ -120,14 +120,14 @@ public class BetDetailsFragment extends Fragment {
         team1ImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeBet(match.getTeam1Id());
+                makeBet(match.getTeam1().getId());
             }
         });
 
         team2ImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeBet(match.getTeam2Id());
+                makeBet(match.getTeam2().getId());
             }
         });
 
@@ -221,10 +221,10 @@ public class BetDetailsFragment extends Fragment {
             }*/
 
         //System.out.println("get team 1 " + match.getTeam1());
-        Picasso.with(getContext()).load(RetrofitBuilder.baseUrl + match.getFlag1()).into(team1ImageView);
-        Picasso.with(getContext()).load(RetrofitBuilder.baseUrl + match.getFlag2()).into(team2ImageView);
-        team1ImageButton.setText(match.getTeam1());
-        team2ImageButton.setText(match.getTeam2());
+        Picasso.with(getContext()).load(RetrofitBuilder.baseUrl + match.getTeam1().getFlag()).into(team1ImageView);
+        Picasso.with(getContext()).load(RetrofitBuilder.baseUrl + match.getTeam2().getFlag()).into(team2ImageView);
+        team1ImageButton.setText(match.getTeam1().getName());
+        team2ImageButton.setText(match.getTeam2().getName());
         nulImageButton.setText("Nul");
         //MatchAdapter matchAdapter = new MatchAdapter(position, getContext());
         //matchList.setAdapter(matchAdapter);

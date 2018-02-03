@@ -10,6 +10,18 @@ public class Team {
     private String flag;
     private int id;
 
+    public Team()
+    {
+
+    }
+
+    public Team(String name, String flag, int id)
+    {
+        this.name = name;
+        this.flag = flag;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

@@ -133,10 +133,10 @@ public class EditTop4Fragment extends Fragment {
         call.enqueue(new Callback<Top4>(){
             @Override
             public void onResponse(Call<Top4> call, Response<Top4> response) {
-                    top4Teams.add(response.body().getTeam1());
-                    top4Teams.add(response.body().getTeam2());
-                    top4Teams.add(response.body().getTeam3());
-                    top4Teams.add(response.body().getTeam4());
+                    top4Teams.add(response.body().getTeam1().getName());
+                    top4Teams.add(response.body().getTeam2().getName());
+                    top4Teams.add(response.body().getTeam3().getName());
+                    top4Teams.add(response.body().getTeam4().getName());
                     callService();
             }
             @Override

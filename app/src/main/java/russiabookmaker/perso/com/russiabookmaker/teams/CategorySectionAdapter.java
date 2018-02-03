@@ -170,8 +170,8 @@ public class CategorySectionAdapter extends RecyclerView.Adapter<CategorySection
         }
         else
         {
-            holder.team1TextView.setText(mItems.get(position).match.getTeam1());
-            holder.team2TextView.setText(mItems.get(position).match.getTeam2());
+            holder.team1TextView.setText(mItems.get(position).match.getTeam1().getName());
+            holder.team2TextView.setText(mItems.get(position).match.getTeam2().getName());
             holder.resultTeam1TextView.setText(String.valueOf(mItems.get(position).match.getResultTeam1()));
             holder.resultTeam2TextView.setText(String.valueOf(mItems.get(position).match.getResultTeam2()));
             if (mItems.get(position).match.getResultBet() == null)
@@ -183,7 +183,7 @@ public class CategorySectionAdapter extends RecyclerView.Adapter<CategorySection
                     public void onClick(View v) {
                         DBHelper mydb = new DBHelper(mContext);
                         mydb.getWritableDatabase();
-                        if (mydb.hasTeam(mItems.get(id).match.getTeam1()) && mydb.hasTeam(mItems.get(id).match.getTeam2())) {
+                        if (mydb.hasTeam(mItems.get(id).match.getTeam1().getName()) && mydb.hasTeam(mItems.get(id).match.getTeam2().getName())) {
                             if (mListener != null)
                                 mListener.onItemSelected(id - getCategory(mItems.get(id).match.getId()) - 1);
                             mydb.close();

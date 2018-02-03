@@ -69,8 +69,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         // - replace the contents of the view with that element
         final int id = position;
         //holder.categoryTextView.setText(mDataset.get(position));
-        holder.team1TextView.setText(mDataset.get(position).getTeam1());
-        holder.team2TextView.setText(mDataset.get(position).getTeam2());
+        holder.team1TextView.setText(mDataset.get(position).getTeam1().getName());
+        holder.team2TextView.setText(mDataset.get(position).getTeam2().getName());
         holder.resultTeam1TextView.setText(String.valueOf(mDataset.get(position).getResultTeam1()));
         holder.resultTeam2TextView.setText(String.valueOf(mDataset.get(position).getResultTeam2()));
         if (mDataset.get(position).getResultBet() == null)

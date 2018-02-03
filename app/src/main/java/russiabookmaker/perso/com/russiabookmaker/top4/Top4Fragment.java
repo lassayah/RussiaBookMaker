@@ -106,14 +106,14 @@ public class Top4Fragment extends Fragment {
         call.enqueue(new Callback<Top4>(){
             @Override
             public void onResponse(Call<Top4> call, Response<Top4> response) {
-                if (response.body().getTeam1() != "" && response.body().getTeam2() != "" && response.body().getTeam3() != "" &&
-                        response.body().getTeam4() != "") {
+                if (response.body().getTeam1().getName() != "" && response.body().getTeam2().getName() != "" && response.body().getTeam3().getName() != "" &&
+                        response.body().getTeam4().getName() != "") {
                     noTop4Layout.setVisibility(View.GONE);
                     top4Layout.setVisibility(View.VISIBLE);
-                    team1TextView.setText(response.body().getTeam1());
-                    team2TextView.setText(response.body().getTeam2());
-                    team3TextView.setText(response.body().getTeam3());
-                    team4TextView.setText(response.body().getTeam4());
+                    team1TextView.setText(response.body().getTeam1().getName());
+                    team2TextView.setText(response.body().getTeam2().getName());
+                    team3TextView.setText(response.body().getTeam3().getName());
+                    team4TextView.setText(response.body().getTeam4().getName());
                 }
                 else
                 {
