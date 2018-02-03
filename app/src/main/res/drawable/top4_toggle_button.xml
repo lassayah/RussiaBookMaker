@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- When selected, use grey -->
-    <item android:drawable="@drawable/ic_done_black_24dp"
+    <item android:drawable="@drawable/ic_check_rouge_48"
         android:state_checked="true" />
     <!-- When not selected, use white-->
-    <item android:drawable="@drawable/ic_favorites"
+    <item android:drawable="@drawable/ic_checkbox_bleu_50"
         android:state_checked="false"/>
 </selector>
