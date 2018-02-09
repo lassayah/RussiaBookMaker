@@ -15,37 +15,67 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/team1Label"/>
+        android:minWidth="88dp"
+        android:id="@+id/team1Label"
+        android:padding="8dp"
+        android:gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/resultTeam1"
-        android:layout_toRightOf="@+id/team1Label"/>
+        android:layout_toRightOf="@+id/team1Label"
+        android:layout_toEndOf="@id/team1Label"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tiret"
         android:text="@string/line"
-        android:layout_toRightOf="@+id/resultTeam1"/>
+        android:layout_toRightOf="@+id/resultTeam1"
+        android:layout_toEndOf="@id/resultTeam1"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/resultTeam2"
-        android:layout_toRightOf="@+id/tiret"/>
+        android:layout_toRightOf="@+id/tiret"
+        android:layout_toEndOf="@id/tiret"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="88dp"
         android:id="@+id/team2Label"
-        android:layout_toRightOf="@+id/resultTeam2"/>
+        android:layout_toRightOf="@+id/resultTeam2"
+        android:layout_toEndOf="@id/resultTeam2"
+        android:gravity="center_horizontal"
+        android:padding="8dp"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:id="@+id/resultBet"
-        android:layout_toRightOf="@+id/team2Label"/>
+        android:layout_toRightOf="@id/team2Label"
+        android:layout_toEndOf="@id/team2Label"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="8dp"/>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_below="@id/resultBet"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#FF909090" />
 
     </RelativeLayout>
 </LinearLayout>

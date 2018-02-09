@@ -21,8 +21,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/textSubtitle"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginBottom="50dp"
-            android:text="Pariez sur le match"/>
+            android:text="@string/betMatch"/>
+
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+    android:layout_marginBottom="20dp"
+android:layout_gravity="center">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:textSize="@dimen/textSubtitle"
+    android:text="Arabie Saoudite"
+    android:id="@+id/betNameTeam1"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="bottom"
+        android:text="@string/betMatchVS"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:textSize="@dimen/textSubtitle"
+    android:text="Arabie Saoudite"
+    android:id="@+id/betNameTeam2"/>
+</LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,25 +62,26 @@
             android:layout_gravity="center"
             android:layout_marginBottom="50dp"
             android:id="@+id/flagsLayout">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/team1DetailImageView"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="vs"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/team2DetailImageView" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:id="@+id/team1DetailImageView"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/team2DetailImageView" />
         </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal"
         android:layout_gravity="center">
         <Button
             android:layout_width="wrap_content"
@@ -63,6 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="@color/colorAccent"
             android:textColor="@color/btnPrimTextColor"
             android:layout_marginBottom="20dp"
@@ -76,8 +111,29 @@
             android:textColor="@color/btnPrimTextColor"
             android:layout_gravity="center_horizontal"
             android:id="@+id/nulImageButton"/>
-
     </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:id="@+id/betDetailsMatch">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:textSize="@dimen/textSubtitle"
+                android:text="vendredi 10 juillet"
+                android:id="@+id/betDateMatch"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/textTitle"
+                android:text="20h30"
+                android:id="@+id/betHeureMatch"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -18,6 +18,8 @@
     <string name="ok">Ok</string>
     <string name="error">Erreur</string>
     <string name="betButton">Je parie</string>
+    <string name="betMatch">Pariez sur le match</string>
+    <string name="betMatchVS">VS</string>
     <string name="matchOfDayTeam1">Equipe 1</string>
     <string name="matchOfDayTeam2">Equipe 2</string>
     <string name="matchOfDayButton">Parier</string>
