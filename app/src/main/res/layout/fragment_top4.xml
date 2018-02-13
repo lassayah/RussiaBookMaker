@@ -11,9 +11,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/top4Layout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Votre Top 4 :"
+            android:layout_marginRight="5dp"
+            android:id="@+id/homeTop4Title"/>
    <TextView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
+       android:textColor="@color/colorPrimaryDark"
        android:id="@+id/firstTeam"/>
     <TextView
         android:layout_width="wrap_content"
@@ -22,6 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/secondTeam"/>
     <TextView
         android:layout_width="wrap_content"
@@ -30,6 +38,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/thirdTeam"/>
     <TextView
         android:layout_width="wrap_content"
@@ -38,6 +47,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/fourthTeam"/>
     </LinearLayout>
 
