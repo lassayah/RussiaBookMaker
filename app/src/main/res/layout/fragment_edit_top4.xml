@@ -16,12 +16,53 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/textSubtitle"
         android:paddingBottom="@dimen/text_margin"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top4Title"
+        android:id="@+id/top4Ligne"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/text_margin">
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="140dp"
+            android:id="@+id/top4TitleCol1"
+            android:text="1e"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/textSubtitle" />
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/top4TitleCol2"
+            android:text="2e"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/textSubtitle" />
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/top4TitleCol3"
+            android:text="3e"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/textSubtitle" />
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/top4TitleCol4"
+            android:text="4e"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/textSubtitle" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/top4List"
-        android:layout_below="@+id/top4Title"
+        android:layout_below="@+id/top4Ligne"
         android:layout_above="@+id/top4Button">
 
     </android.support.v7.widget.RecyclerView>
